@@ -6,29 +6,29 @@
 CREATE TABLE [Clients]
 (
 	[idClient] INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-	[document] INT UNIQUE,
-	[name] VARCHAR(40) UNIQUE,
-	[lastname] VARCHAR(40),
-	[status] VARCHAR(20)
+	[document] INT NOT NULL UNIQUE,
+	[name] VARCHAR(40) NOT NULL UNIQUE,
+	[lastname] VARCHAR(40) NOT NULL,
+	[status] VARCHAR(20) NOT NULL
 )
 
 CREATE TABLE [Users]
 (
 	[idUser] INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-	[idClient] INT,
-	[password] VARCHAR(64),
-	[rol] VARCHAR(20),
-	[status] VARCHAR(20),
+	[idClient] INT NOT NULL,
+	[password] VARCHAR(64) NOT NULL,
+	[rol] VARCHAR(20) NOT NULL,
+	[status] VARCHAR(20) NOT NULL,
 	CONSTRAINT fk_Clients_Users FOREIGN KEY (idClient) REFERENCES Clients (idClient) 
 )
 
 CREATE TABLE [Loans]
 (
 	[idLoan] INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-	[idUser] INT,
-	[loanDate] DATETIME,
-	[expirationDate] DATETIME,
-	[loanStatus] VARCHAR(20),
+	[idUser] INT NOT NULL,
+	[loanDate] DATETIME NOT NULL,
+	[expirationDate] DATETIME NOT NULL,
+	[loanStatus] VARCHAR(20) NOT NULL,
 	CONSTRAINT fk_Users_Loans FOREIGN KEY (idUser) REFERENCES Users (idUser) 
 )
 
@@ -36,19 +36,19 @@ CREATE TABLE [Loans]
 CREATE TABLE [Books]
 (
 	[idBook] INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-	[name] VARCHAR(40) UNIQUE,
-	[author] VARCHAR(30),
-	[editorial] VARCHAR(30),
-	[category] VARCHAR(30),
-	[year] INT,
-	[stock] INT
+	[name] VARCHAR(40) UNIQUE NOT NULL,
+	[author] VARCHAR(30) NOT NULL,
+	[editorial] VARCHAR(30)NOT NULL,
+	[category] VARCHAR(30) NOT NULL,
+	[year] INT NOT NULL,
+	[stock] INT NOT NULL
 )
 
-CREATE TABLE [loanBooks]
+CREATE TABLE [LoanBooks]
 (
 	[idLoanBooks] INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-	[idBook] INT,
-	[idLoan] INT,
+	[idBook] INT NOT NULL,
+	[idLoan] INT NOT NULL,
 	CONSTRAINT fk_Books_LoanBooks FOREIGN KEY (idBook) REFERENCES Books (idBook),
 	CONSTRAINT fk_Loans_LoanBooks FOREIGN KEY (idLoan) REFERENCES Loans (idLoan) 
 )
@@ -56,9 +56,9 @@ CREATE TABLE [loanBooks]
 CREATE TABLE [Penalty]
 (
 	[idPenalty] INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-	[idLoan] INT,
-	[amount] INT,
-	[status] VARCHAR(20),
+	[idLoan] INT NOT NULL,
+	[amount] INT NOT NULL,
+	[status] VARCHAR(20) NOT NULL,
 	CONSTRAINT fk_Loans_Penalty FOREIGN KEY (idLoan) REFERENCES Loans (idLoan) 
 )
 
