@@ -4,6 +4,9 @@
  */
 package co.edu.ucompensar.loanbooks.Views;
 
+import co.edu.ucompensar.loanbooks.Controller.DBConnection;
+import co.edu.ucompensar.loanbooks.Controller.PostLoansBD;
+
 /**
  *
  * @author blakc
@@ -157,7 +160,13 @@ public class Main extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        PostLoansBD pdb = new PostLoansBD();
+        pdb.readBook();
+        pdb.insertBook("Diamante Negro","Arsen Lupin","Booked","Aventura",2009,2);
+        
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
