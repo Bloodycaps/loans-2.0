@@ -56,8 +56,8 @@ public class postLoansBDUsers {
         } 
     }
     
-    public void updateUser (int idClient, String password, String rol, String status){
-        String spName ="sp_insert_users";
+    public void updateUser (int idClient, String rol, String status){
+        String spName ="sp_update_data_users";
         try{
             Connection connection;
             DBConnection conn = new DBConnection();
@@ -65,7 +65,6 @@ public class postLoansBDUsers {
             CallableStatement statement = connection.prepareCall("{call " + spName + "(?,?,?,?)}");
             
             statement.setInt("@idClient", idClient);
-            statement.setString("@password", password);
             statement.setString("@rol",rol );
             statement.setString("@status", status);
             
@@ -77,8 +76,8 @@ public class postLoansBDUsers {
         } 
     }
     
-    public void deleteBook (int idBook ){
-        String spName ="sp_delete_books";
+    public void deleteUser (int idBook ){
+        String spName ="sp_delete_users";
         try{
             Connection connection;
             DBConnection conn = new DBConnection();
@@ -91,7 +90,7 @@ public class postLoansBDUsers {
             
             System.out.println("Ok");            
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_books" + e.toString(), "Error", 0);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_delete_users" + e.toString(), "Error", 0);
         } 
     }
 }
