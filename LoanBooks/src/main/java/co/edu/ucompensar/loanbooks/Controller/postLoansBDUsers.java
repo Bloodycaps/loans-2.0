@@ -8,6 +8,6 @@ package co.edu.ucompensar.loanbooks.Controller;
  *
  * @author blakc
  */
-public class Controller {
+public class postLoansBDUsers {
     
 }

@@ -66,5 +66,47 @@ public class PostLoansBD {
         } 
     }
     
+    public void updateBook (String nameBook, String author, String editorial,
+            String category, int year, int cuantity, int idBook){
+        String spName ="sp_update_books";
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?,?,?,?,?,?,?)}");
+            
+            statement.setString("@nameBook", nameBook);
+            statement.setString("@author", author);
+            statement.setString("@editorial", editorial);
+            statement.setString("@category", category);
+            statement.setInt("@year", year);
+            statement.setInt("@cuantity", cuantity);
+            statement.setInt("@idBook", idBook);
+            
+            statement.execute();
+            
+            System.out.println("Ok");            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_books" + e.toString(), "Error", 0);
+        } 
+    }
+    public void deleteBook (int idBook ){
+        String spName ="sp_delete_books";
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?)}");
+            
+            statement.setString("@idBook", idBook);
+                
+            statement.execute();
+            
+            System.out.println("Ok");            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_books" + e.toString(), "Error", 0);
+        } 
+    }
+    
     
 }
