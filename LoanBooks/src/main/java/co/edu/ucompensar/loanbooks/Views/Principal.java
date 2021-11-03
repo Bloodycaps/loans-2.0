@@ -45,7 +45,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         documento = new javax.swing.JTextField();
         contrasenaIng = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        jInicioSesion = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
 
@@ -234,10 +234,10 @@ public class Principal extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel10.setText("Contraseña");
 
-        jButton4.setText("Iniciar sesión");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jInicioSesion.setText("Iniciar sesión");
+        jInicioSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jInicioSesionActionPerformed(evt);
             }
         });
 
@@ -263,7 +263,7 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(documento, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(170, 170, 170)
-                        .addComponent(jButton4)))
+                        .addComponent(jInicioSesion)))
                 .addContainerGap(191, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -280,7 +280,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
                 .addGap(34, 34, 34)
-                .addComponent(jButton4)
+                .addComponent(jInicioSesion)
                 .addContainerGap(113, Short.MAX_VALUE))
         );
 
@@ -325,17 +325,15 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_contrasenaActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jInicioSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jInicioSesionActionPerformed
         Libros v1 = new Libros();
         if(identificacion.getText().isEmpty() || usuario.getText().isEmpty() || contrasena.getText(). isEmpty()){
             JOptionPane.showMessageDialog(null,"Completa todos los campos"); 
-    }                                       
- else
-        {
+    }else{
             v1.setVisible(true);
         }
     
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jInicioSesionActionPerformed
 
     private void IngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresoActionPerformed
         Libros v1 = new Libros();
@@ -361,10 +359,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_nombreActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String bookName = nombre.getText();
+        String bookAuthor = autor.getText();
+        String category = categoria.getText();
         if(nombre.getText().isEmpty() || autor.getText().isEmpty() || categoria.getText(). isEmpty()){
             JOptionPane.showMessageDialog(null,"Completa todos los campos");
         }else{
-            //buscar 
+            
             
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -414,7 +415,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField identificacion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jInicioSesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
