@@ -98,7 +98,7 @@ public class PostLoansBD {
             connection = conn.starConnection();        
             CallableStatement statement = connection.prepareCall("{call " + spName + "(?)}");
             
-            statement.setString("@idBook", idBook);
+            statement.setInt("@idBook", idBook);
                 
             statement.execute();
             
