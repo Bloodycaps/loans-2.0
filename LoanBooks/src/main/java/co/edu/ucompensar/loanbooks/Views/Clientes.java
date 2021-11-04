@@ -1,6 +1,6 @@
 package co.edu.ucompensar.loanbooks.Views;
 
-import co.edu.ucompensar.loanbooks.Controller.PostLoansBD;
+import co.edu.ucompensar.loanbooks.Controller.PostLoansBDBooks;
 import co.edu.ucompensar.loanbooks.Models.Client;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Clientes extends javax.swing.JFrame {
 
-    PostLoansBD clientCrud = new PostLoansBD();
+    PostLoansBDBooks clientCrud = new PostLoansBDBooks();
     
     /**
      * Creates new form Libros

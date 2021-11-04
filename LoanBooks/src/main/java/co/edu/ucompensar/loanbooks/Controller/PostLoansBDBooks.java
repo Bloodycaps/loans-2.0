@@ -17,13 +17,13 @@ import javax.swing.JOptionPane;
  *
  * @author Santiago
  */
-public class PostLoansBD {
+public class PostLoansBDBooks {
     
     /**
      * Metodo encargado de registrar libros en la base de datos.
      */
     public void readBook (){
-        String spName ="sp_read_books";
+        String spName ="sp_get_books";
         try{
             Connection connection;
             DBConnection conn = new DBConnection();
@@ -37,7 +37,7 @@ public class PostLoansBD {
             
             result.close();           
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_read_books" + e.toString(), "Error", 0);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_books" + e.toString(), "Error", 0);
         }        
     }  
     
