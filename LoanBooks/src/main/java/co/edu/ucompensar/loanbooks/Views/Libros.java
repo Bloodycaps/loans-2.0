@@ -1,6 +1,8 @@
 package co.edu.ucompensar.loanbooks.Views;
 
-import co.edu.ucompensar.loanbooks.Controller.PostLoansBD;
+import co.edu.ucompensar.loanbooks.Controller.PostLoansBDBooks;
+import co.edu.ucompensar.loanbooks.Models.Books;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -14,13 +16,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Libros extends javax.swing.JFrame {
 
-    PostLoansBD bookCRUD = new PostLoansBD();
-    
+    ArrayList<Books> booksList = new ArrayList<>();
+    PostLoansBDBooks bookCRUD = new PostLoansBDBooks();
+
     /**
      * Creates new form Libros
      */
     public Libros() {
         initComponents();
+        cargarTabla();
     }
 
     /**
@@ -57,12 +61,6 @@ public class Libros extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        registroPrestamos = new javax.swing.JMenuItem();
-        registroActu = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        mulRegs = new javax.swing.JMenuItem();
-        demAct = new javax.swing.JMenuItem();
 
         jLabel5.setText("Categoria");
 
@@ -75,15 +73,20 @@ public class Libros extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre del libro", "Autor", "Editorial", "Categoria", "Año de Publicacion", "Cantidad"
+                "ID", "Nombre del libro", "Autor", "Editorial", "Categoria", "Año de Publicacion", "Cantidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTableBooksList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableBooksListMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTableBooksList);
@@ -277,7 +280,7 @@ public class Libros extends javax.swing.JFrame {
                     .addGroup(escritorioLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(2, 64, 89));
@@ -301,46 +304,6 @@ public class Libros extends javax.swing.JFrame {
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Prestamos");
-
-        registroPrestamos.setText("Registrar");
-        registroPrestamos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registroPrestamosActionPerformed(evt);
-            }
-        });
-        jMenu1.add(registroPrestamos);
-
-        registroActu.setText("Actualizar");
-        registroActu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registroActuActionPerformed(evt);
-            }
-        });
-        jMenu1.add(registroActu);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu3.setText("Multas");
-
-        mulRegs.setText("Registrar");
-        mulRegs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mulRegsActionPerformed(evt);
-            }
-        });
-        jMenu3.add(mulRegs);
-
-        demAct.setText("Actualizar");
-        demAct.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                demActActionPerformed(evt);
-            }
-        });
-        jMenu3.add(demAct);
-
-        jMenuBar1.add(jMenu3);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -363,33 +326,6 @@ public class Libros extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void registroPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroPrestamosActionPerformed
-        PrestamosRegistro v1 = new PrestamosRegistro();
-        escritorio.add(v1);
-        v1.show();
-
-    }//GEN-LAST:event_registroPrestamosActionPerformed
-
-    private void registroActuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActuActionPerformed
-        PrestamoActualizar v2 = new PrestamoActualizar();
-        escritorio.add(v2);
-        v2.show();
-    }//GEN-LAST:event_registroActuActionPerformed
-
-    private void demActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_demActActionPerformed
-        MultasAct v3 = new MultasAct();
-        escritorio.add(v3);
-        v3.show();
-    }//GEN-LAST:event_demActActionPerformed
-
-    private void mulRegsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mulRegsActionPerformed
-        MultasReg v4 = new MultasReg();
-        escritorio.add(v4);
-        v4.show();
-
-
-    }//GEN-LAST:event_mulRegsActionPerformed
-
     private void jTextBookNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextBookNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextBookNameActionPerformed
@@ -400,8 +336,21 @@ public class Libros extends javax.swing.JFrame {
 
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
         // TODO add your handling code here:
-        String wantedBook = jTextBookSearch.getText();
-        bookCRUD.readBook();
+        String[][] dataTable = new String[booksList.size()][5];
+
+        for (int i = 0; i < booksList.size(); i++) {
+            dataTable[i][0] = booksList.get(i).getName();
+            dataTable[i][1] = booksList.get(i).getAuthor();
+            dataTable[i][2] = booksList.get(i).getEditorial();
+            dataTable[i][3] = booksList.get(i).getCategory();
+            dataTable[i][4] = String.valueOf(booksList.get(i).getYear());
+            dataTable[i][5] = String.valueOf(booksList.get(i).getQuantity());
+        }
+        jTableBooksList.setModel(new javax.swing.table.DefaultTableModel(
+                dataTable, new String[]{
+                    "Nombre del libro", "Autor", "Editorial", "Categoria", "Año de Publicacion", "Cantidad"
+                }
+        ));
 
     }//GEN-LAST:event_jButtonSearchActionPerformed
 
@@ -426,9 +375,13 @@ public class Libros extends javax.swing.JFrame {
         int quantity = (Integer) jSpinnerQuantity.getValue();
 
         bookCRUD.insertBook(bookName, bookAuthor, bookEditorial, category, year, quantity);
+        cleanDataBook();
+        cargarTabla();
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
+        int fila = jTableBooksList.getSelectedRow();
+        int idBook = (int) jTableBooksList.getValueAt(fila, 0);
         String bookName = jTextBookName.getText();
         String bookAuthor = jTextBookAuthor.getText();
         String bookEditorial = jTextEditorialBook.getText();
@@ -437,14 +390,42 @@ public class Libros extends javax.swing.JFrame {
         int quantity = (Integer) jSpinnerQuantity.getValue();
 
         bookCRUD.updateBook(bookName, bookAuthor, bookEditorial, category, year, quantity, idBook);
+        cleanDataBook();
+        cargarTabla();
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+        int fila = jTableBooksList.getSelectedRow();
+        int idBook = (int) jTableBooksList.getValueAt(fila, 0);
         bookCRUD.deleteBook(idBook);
+        cleanDataBook();
+        cargarTabla();
     }//GEN-LAST:event_jButtonDeleteActionPerformed
+
+    private void jTableBooksListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableBooksListMouseClicked
+        try {
+            int fila = jTableBooksList.getSelectedRow();
+            jTextBookName.setText(jTableBooksList.getValueAt(fila, 1).toString());
+            jTextBookAuthor.setText(jTableBooksList.getValueAt(fila, 2).toString());
+            jTextEditorialBook.setText(jTableBooksList.getValueAt(fila, 3).toString());
+            jTextCategoryBook.setText(jTableBooksList.getValueAt(fila, 4).toString());
+            jFormattedYear.setValue(jTableBooksList.getValueAt(fila, 5));
+            jSpinnerQuantity.setValue(jTableBooksList.getValueAt(fila, 6).toString());
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jTableBooksListMouseClicked
 
     private void cargarTabla() {
         bookCRUD.readBook();
+    }
+
+    private void cleanDataBook() {
+        jTextBookName.setText("");
+        jTextBookAuthor.setText("");
+        jTextEditorialBook.setText("");
+        jTextCategoryBook.setText("");
+        jFormattedYear.setText("");
+        jSpinnerQuantity.setValue(0);
     }
 
     /**
@@ -487,7 +468,6 @@ public class Libros extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem demAct;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonEdit;
@@ -503,8 +483,6 @@ public class Libros extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -515,8 +493,5 @@ public class Libros extends javax.swing.JFrame {
     private javax.swing.JTextField jTextBookSearch;
     private javax.swing.JTextField jTextCategoryBook;
     private javax.swing.JTextField jTextEditorialBook;
-    private javax.swing.JMenuItem mulRegs;
-    private javax.swing.JMenuItem registroActu;
-    private javax.swing.JMenuItem registroPrestamos;
     // End of variables declaration//GEN-END:variables
 }
