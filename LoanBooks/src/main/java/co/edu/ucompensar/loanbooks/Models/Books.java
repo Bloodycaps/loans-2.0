@@ -18,11 +18,11 @@ public class Books {
     private String author;
     private String editorial;
     private String category;
-    private Date year;
+    private int year;
     private int quantity;
 
     
-    public Books(int idBooks, String name, String author, String editorial, String category, Date year, int quantity) {
+    public Books(int idBooks, String name, String author, String editorial, String category, int year, int quantity) {
         this.idBooks = idBooks;
         this.name = name;
         this.author = author;
@@ -52,7 +52,7 @@ public class Books {
         return category;
     }
 
-    public Date getYear() {
+    public int getYear() {
         return year;
     }
 
@@ -80,7 +80,7 @@ public class Books {
         this.category = category;
     }
 
-    public void setYear(Date year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
