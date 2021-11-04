@@ -17,7 +17,15 @@ public class Client {
     private String lastName;
     private String status;
 
-    public Client(int idClient, int document, String name, String lastName, String status) {
+    public Client(int document, String name, String lastName, String status) {
+        this.idClient = idClient;
+        this.document = document;
+        this.name = name;
+        this.lastName = lastName;
+        this.status = status;
+    }
+    
+    public Client(int idClient,int document, String name, String lastName, String status) {
         this.idClient = idClient;
         this.document = document;
         this.name = name;
@@ -63,47 +71,6 @@ public class Client {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 43 * hash + this.idClient;
-        hash = 43 * hash + this.document;
-        hash = 43 * hash + Objects.hashCode(this.name);
-        hash = 43 * hash + Objects.hashCode(this.lastName);
-        hash = 43 * hash + Objects.hashCode(this.status);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Client other = (Client) obj;
-        if (this.idClient != other.idClient) {
-            return false;
-        }
-        if (this.document != other.document) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastName, other.lastName)) {
-            return false;
-        }
-        if (!Objects.equals(this.status, other.status)) {
-            return false;
-        }
-        return true;
     }
 
     @Override
