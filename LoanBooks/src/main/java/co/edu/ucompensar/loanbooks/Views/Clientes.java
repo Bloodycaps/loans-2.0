@@ -3,6 +3,7 @@ package co.edu.ucompensar.loanbooks.Views;
 import co.edu.ucompensar.loanbooks.Controller.PostLoansBDBooks;
 import co.edu.ucompensar.loanbooks.Models.Client;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -17,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 public class Clientes extends javax.swing.JFrame {
 
     PostLoansBDBooks clientCrud = new PostLoansBDBooks();
+    int selectRow = -1;
     
     /**
      * Creates new form Libros
@@ -52,6 +54,7 @@ public class Clientes extends javax.swing.JFrame {
         jButtonEdit = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
         jComboBoxClientStatus = new javax.swing.JComboBox<>();
+        loadData = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -154,6 +157,14 @@ public class Clientes extends javax.swing.JFrame {
 
         jComboBoxClientStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Activo", "Inactivo", "Suspendido" }));
 
+        loadData.setText("Cargar Datos");
+        loadData.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        loadData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadDataActionPerformed(evt);
+            }
+        });
+
         escritorio.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jTextClientSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -169,25 +180,21 @@ public class Clientes extends javax.swing.JFrame {
         escritorio.setLayer(jButtonEdit, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonDelete, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jComboBoxClientStatus, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(loadData, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(escritorioLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(escritorioLayout.createSequentialGroup()
-                                .addComponent(jTextClientSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(escritorioLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(jTextClientSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
                 .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -195,16 +202,25 @@ public class Clientes extends javax.swing.JFrame {
                     .addComponent(jButtonSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextClientName)
-                    .addComponent(jTextClientDocument)
-                    .addComponent(jTextClientLastname)
+                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(escritorioLayout.createSequentialGroup()
+                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextClientName)
+                            .addComponent(jTextClientDocument)
+                            .addComponent(jTextClientLastname)
+                            .addComponent(jComboBoxClientStatus, 0, 192, Short.MAX_VALUE))
+                        .addGap(63, 63, 63))
+                    .addGroup(escritorioLayout.createSequentialGroup()
+                        .addComponent(loadData, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jComboBoxClientStatus, 0, 192, Short.MAX_VALUE))
-                .addGap(63, 63, 63))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))))
+            .addGroup(escritorioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,7 +253,8 @@ public class Clientes extends javax.swing.JFrame {
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(loadData, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(escritorioLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -257,7 +274,7 @@ public class Clientes extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(329, 329, 329)
                 .addComponent(jLabel4)
-                .addContainerGap(344, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,16 +409,58 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
-
+        selectRow = this.jTableClientsList.getSelectedRow();
+        int clientDocument,id;
+        String clientName,clientLastname,clientStatus,idClient;
+                
+        if(this.jTableClientsList.getSelectedRow() != -1){
+            clientDocument = Integer.parseInt(this.jTextClientDocument.getText());
+            clientName  = this.jTextClientName.getText();
+            clientLastname = this.jTextClientLastname.getText();
+            clientStatus = this.jComboBoxClientStatus.getSelectedItem().toString();
+            idClient = (String) jTableClientsList.getValueAt(selectRow, 0);
+            id = Integer.parseInt(idClient);            
+            Client client = new Client(id, clientDocument, clientName, clientLastname, clientStatus);
+            clientCrud.updateClients(client);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un elemento de la tabla");
+        }
+        
+        
+        this.clean();
     }//GEN-LAST:event_jButtonEditActionPerformed
 
+    public void clean(){
+        this.jTextClientDocument.setText("");
+        this.jTextClientName.setText("");
+        this.jTextClientLastname.setText("");        
+        this.jComboBoxClientStatus.setSelectedIndex(0);        
+    }
+    
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-
+        selectRow = this.jTableClientsList.getSelectedRow();
+        int id;
+        String idClient;
+        if(this.jTableClientsList.getSelectedRow() != -1){            
+            idClient = (String) jTableClientsList.getValueAt(selectRow, 0);
+            id = Integer.parseInt(idClient);                        
+            clientCrud.deleteClients(id);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un elemento de la tabla");
+        }
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
-    private void cargarTabla() {
-
-    }
+    private void loadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadDataActionPerformed
+        selectRow = this.jTableClientsList.getSelectedRow();
+        if(selectRow != -1){
+            this.jTextClientDocument.setText((String) jTableClientsList.getValueAt(selectRow, 1));
+            this.jTextClientName.setText((String) jTableClientsList.getValueAt(selectRow, 2));
+            this.jTextClientLastname.setText((String) jTableClientsList.getValueAt(selectRow, 3));        
+            this.jComboBoxClientStatus.getModel().setSelectedItem(jTableClientsList.getValueAt(selectRow, 4));
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un elemento de la tabla");
+        }
+    }//GEN-LAST:event_loadDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -468,6 +527,7 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JTextField jTextClientLastname;
     private javax.swing.JTextField jTextClientName;
     private javax.swing.JTextField jTextClientSearch;
+    private javax.swing.JButton loadData;
     private javax.swing.JMenuItem mulRegs;
     private javax.swing.JMenuItem registroActu;
     private javax.swing.JMenuItem registroPrestamos;

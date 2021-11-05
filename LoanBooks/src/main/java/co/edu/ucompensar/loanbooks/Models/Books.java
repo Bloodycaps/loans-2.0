@@ -31,6 +31,15 @@ public class Books {
         this.year = year;
         this.quantity = quantity;
     }
+    
+    public Books(String name, String author, String editorial, String category, int year, int quantity) {        
+        this.name = name;
+        this.author = author;
+        this.editorial = editorial;
+        this.category = category;
+        this.year = year;
+        this.quantity = quantity;
+    }
 
     public int getIdBooks() {
         return idBooks;

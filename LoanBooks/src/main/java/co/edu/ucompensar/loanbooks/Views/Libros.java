@@ -367,16 +367,20 @@ public class Libros extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextCategoryBookActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        String bookName = jTextBookName.getText();
+       /* String bookName = jTextBookName.getText();
         String bookAuthor = jTextBookAuthor.getText();
         String bookEditorial = jTextEditorialBook.getText();
         String category = jTextCategoryBook.getText();
         int year = (Integer) jFormattedYear.getValue();
-        int quantity = (Integer) jSpinnerQuantity.getValue();
-
-        bookCRUD.insertBook(bookName, bookAuthor, bookEditorial, category, year, quantity);
-        cleanDataBook();
-        cargarTabla();
+        int quantity = (Integer) jSpinnerQuantity.getValue();*/
+       
+        //Books book = new Books(bookName, bookAuthor, bookEditorial, category, year, quantity);
+       
+        Books book = new Books("Escape", "Dross", "MR", "Suspenso", 2018, 3);
+        
+        bookCRUD.insertBook(book);
+        //cleanDataBook();
+        //cargarTabla();
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
