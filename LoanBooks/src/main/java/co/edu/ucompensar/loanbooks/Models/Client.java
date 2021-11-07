@@ -32,6 +32,11 @@ public class Client {
         this.lastName = lastName;
         this.status = status;
     }
+    
+    public Client(int idClient,long document){
+        this.idClient = idClient;
+        this.document = document;
+    }
 
     public int getIdClient() {
         return idClient;

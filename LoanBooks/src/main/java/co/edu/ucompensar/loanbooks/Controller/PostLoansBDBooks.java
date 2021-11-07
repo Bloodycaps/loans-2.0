@@ -7,6 +7,7 @@ package co.edu.ucompensar.loanbooks.Controller;
 
 import co.edu.ucompensar.loanbooks.Models.Books;
 import co.edu.ucompensar.loanbooks.Models.Client;
+import co.edu.ucompensar.loanbooks.Models.User;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -89,7 +90,7 @@ public class PostLoansBDBooks {
             
             System.out.println("Ok");            
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_books" + e.toString(), "Error", 0);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_update_books" + e.toString(), "Error", 0);
         } 
     }
     public void deleteBook (int idBook ){
@@ -106,7 +107,7 @@ public class PostLoansBDBooks {
             
             System.out.println("Ok");            
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_books" + e.toString(), "Error", 0);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_delete_books" + e.toString(), "Error", 0);
         } 
     }
     
@@ -140,7 +141,7 @@ public class PostLoansBDBooks {
             }
                         
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_books" + e.toString(), "Error", 0);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_clients" + e.toString(), "Error", 0);
         } 
     }
     
@@ -163,7 +164,7 @@ public class PostLoansBDBooks {
             }                        
             result.close();           
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_read_books" + e.toString(), "Error", 0);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_clients" + e.toString(), "Error", 0);
         }        
         return clientList;
     }
@@ -189,7 +190,7 @@ public class PostLoansBDBooks {
                 clientList.add(client);                
             }                          
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_books" + e.toString(), "Error", 0);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_client" + e.toString(), "Error", 0);
         } 
         
         return clientList;
@@ -226,7 +227,7 @@ public class PostLoansBDBooks {
             }
                         
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_update_books" + e.toString(), "Error", 0);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_update_clients" + e.toString(), "Error", 0);
         } 
     }
     
@@ -256,7 +257,179 @@ public class PostLoansBDBooks {
             }
                         
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_delete_books" + e.toString(), "Error", 0);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_delete_clients" + e.toString(), "Error", 0);
         } 
-    }   
+    }
+    
+    /**
+     * Metodo encargado de traer los documentos de la base de datos.
+     */    
+    public ArrayList getDocuments(){
+        String spName ="sp_get_documents";
+        ArrayList<Long> documentList = new ArrayList<>(); 
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "}");
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                documentList.add(result.getLong(1));                                
+            }                        
+            result.close();           
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_documents" + e.toString(), "Error", 0);
+        }        
+        return documentList;
+    }
+    
+    /**
+     * Metodo encargado de registrar usuarios en la base de datos.
+     */
+    public void insertUsers (User user){
+        String spName ="sp_insert_users";
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?,?,?,?)}");
+            int response = 1;
+            
+            statement.setLong("@client", user.getIdClient());
+            statement.setString("@password", user.getPassword());
+            statement.setString("@rol", user.getRol());
+            statement.setString("@status", user.getStatus());
+                        
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                response = result.getInt(1);             
+            }
+            
+            if(response == 0){
+                JOptionPane.showMessageDialog(null, "El usuario " + user.getIdClient()+ " se registro correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "Ocurrio un error intentando registrar el usuario", "Error", 0);                
+            }
+                        
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_users" + e.toString(), "Error", 0);
+        } 
+    }
+    
+     /**
+     * Metodo encargado de Mostrar usuarios de la base de datos.
+     */    
+    public ArrayList getUsers (){
+        String spName ="sp_get_users";
+        ArrayList<User> userList = new ArrayList<>(); 
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "}");
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                User user = new User(result.getInt(1), result.getInt(2), result.getString(3),result.getString(4),result.getString(5));                
+                userList.add(user);                
+            }                        
+            result.close();           
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_users" + e.toString(), "Error", 0);
+        }        
+        return userList;
+    }
+    
+    /**
+     * Metodo encargado de consultar usuaruis en la base de datos por documento.
+     */
+    public ArrayList getUser (long document){
+        String spName ="sp_get_user";
+        ArrayList<User> userList = new ArrayList<>(); 
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?)}");            
+            
+            statement.setLong("@document", document);
+                                    
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+               User user = new User(result.getInt(1), result.getInt(2), result.getString(3),result.getString(4),result.getString(5));                                
+                userList.add(user);                
+            }                          
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_user" + e.toString(), "Error", 0);
+        } 
+        
+        return userList;
+    }
+    
+    /**
+     * Metodo encargado de Actualizar usuarios en la base de datos.
+     */
+    public void updateUsers (User user){
+        String spName ="sp_update_data_users";
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?,?,?)}");
+            int response = 1;
+            
+            statement.setString("@rol", user.getRol());
+            statement.setString("@status", user.getStatus());
+            statement.setInt("@idUser", user.getIdUser());
+                        
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                response = result.getInt(1);             
+            }
+            
+            if(response == 0){
+                JOptionPane.showMessageDialog(null, "El usuario se actualizo correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "Ocurrio un error intentando actualizar el usuario", "Error", 0);                
+            }
+                        
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_update_data_users" + e.toString(), "Error", 0);
+        } 
+    }
+    
+    /**
+     * Metodo encargado de eliminar usuarios en la base de datos.
+     */
+    public void deleteUsers (int idUser){
+        String spName ="sp_delete_users";
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?)}");
+            int response = 1;
+            
+            statement.setInt("@idUser", idUser);                        
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                response = result.getInt(1);             
+            }
+            
+            if(response == 0){
+                JOptionPane.showMessageDialog(null, "El usuario se Elimino correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "Ocurrio un error intentando Eliminar el usuario", "Error", 0);                
+            }
+                        
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_delete_users" + e.toString(), "Error", 0);
+        } 
+    }
+    
 }

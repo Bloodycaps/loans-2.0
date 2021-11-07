@@ -2,7 +2,10 @@ package co.edu.ucompensar.loanbooks.Views;
 
 import co.edu.ucompensar.loanbooks.Controller.PostLoansBDBooks;
 import co.edu.ucompensar.loanbooks.Models.Client;
+import co.edu.ucompensar.loanbooks.Models.User;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,15 +18,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Angie Melo
  */
-public class Clientes extends javax.swing.JFrame {
+public class Usuarios extends javax.swing.JFrame {
 
-    PostLoansBDBooks clientCrud = new PostLoansBDBooks();
+    PostLoansBDBooks usersCrud = new PostLoansBDBooks();
     int selectRow = -1;
     
     /**
      * Creates new form Libros
      */
-    public Clientes() {
+    public Usuarios() {
         initComponents();
     }
 
@@ -39,22 +42,24 @@ public class Clientes extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         escritorio = new javax.swing.JDesktopPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableClientsList = new javax.swing.JTable();
+        jTableUserList = new javax.swing.JTable();
         jButtonSearch = new javax.swing.JButton();
-        jTextClientSearch = new javax.swing.JTextField();
+        jTextUserSearch = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextClientDocument = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextClientName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextClientLastname = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jButtonSave = new javax.swing.JButton();
         jButtonEdit = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
         jComboBoxClientStatus = new javax.swing.JComboBox<>();
         loadData = new javax.swing.JButton();
+        listDocuments = new javax.swing.JComboBox<>();
+        jPassword = new javax.swing.JPasswordField();
+        jLabel8 = new javax.swing.JLabel();
+        jConfirmPassword = new javax.swing.JPasswordField();
+        jComboBoxRoll = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -64,23 +69,23 @@ public class Clientes extends javax.swing.JFrame {
 
         escritorio.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTableClientsList.setModel(new javax.swing.table.DefaultTableModel(
+        jTableUserList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "idCliente", "Documento", "Nombres", "Apellidos", "Estado"
+                "idUsuario", "Usuario", "Rol", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableClientsList);
+        jScrollPane1.setViewportView(jTableUserList);
 
         jButtonSearch.setText("Consultar");
         jButtonSearch.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -90,37 +95,19 @@ public class Clientes extends javax.swing.JFrame {
             }
         });
 
-        jTextClientSearch.addActionListener(new java.awt.event.ActionListener() {
+        jTextUserSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextClientSearchActionPerformed(evt);
+                jTextUserSearchActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Ingrese el documento del cliente que desea consultar");
+        jLabel1.setText("Cliente que desea consultar");
 
         jLabel6.setText("Documento:");
 
-        jTextClientDocument.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextClientDocumentActionPerformed(evt);
-            }
-        });
+        jLabel2.setText("Contraseña");
 
-        jLabel2.setText("Nombres:");
-
-        jTextClientName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextClientNameActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Apellidos:");
-
-        jTextClientLastname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextClientLastnameActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("Rol");
 
         jLabel7.setText("Estado");
 
@@ -158,22 +145,35 @@ public class Clientes extends javax.swing.JFrame {
             }
         });
 
+        listDocuments.setModel(new DefaultComboBoxModel(documents()));
+        listDocuments.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                listDocumentsItemStateChanged(evt);
+            }
+        });
+
+        jLabel8.setText("Confirmar Contraseña");
+
+        jComboBoxRoll.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Administrador", "Controlador", "Cliente" }));
+
         escritorio.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        escritorio.setLayer(jTextClientSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(jTextUserSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        escritorio.setLayer(jTextClientDocument, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        escritorio.setLayer(jTextClientName, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        escritorio.setLayer(jTextClientLastname, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonSave, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonEdit, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonDelete, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jComboBoxClientStatus, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(loadData, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(listDocuments, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(jPassword, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(jConfirmPassword, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(jComboBoxRoll, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -186,36 +186,49 @@ public class Clientes extends javax.swing.JFrame {
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(escritorioLayout.createSequentialGroup()
-                                .addComponent(jTextClientSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextUserSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(escritorioLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
+                        .addComponent(listDocuments, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))
                     .addGroup(escritorioLayout.createSequentialGroup()
-                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextClientName)
-                            .addComponent(jTextClientDocument)
-                            .addComponent(jTextClientLastname)
-                            .addComponent(jComboBoxClientStatus, 0, 192, Short.MAX_VALUE))
-                        .addGap(63, 63, 63))
+                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(escritorioLayout.createSequentialGroup()
+                                .addGap(144, 144, 144)
+                                .addComponent(jPassword))
+                            .addGroup(escritorioLayout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel6))
+                                .addGap(27, 27, 27)
+                                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxRoll, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxClientStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(escritorioLayout.createSequentialGroup()
-                        .addComponent(loadData, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37))))
+                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(escritorioLayout.createSequentialGroup()
+                                .addGap(91, 91, 91)
+                                .addComponent(jLabel3))
+                            .addGroup(escritorioLayout.createSequentialGroup()
+                                .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(loadData, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(60, 67, Short.MAX_VALUE))))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,42 +238,44 @@ public class Clientes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextClientSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextUserSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(escritorioLayout.createSequentialGroup()
-                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(jTextClientDocument, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(listDocuments, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextClientName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2)
+                            .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
                         .addGap(18, 18, 18)
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jTextClientLastname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
+                            .addComponent(jComboBoxRoll, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jComboBoxClientStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(99, 99, 99)
+                            .addComponent(jComboBoxClientStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(loadData, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(escritorioLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(46, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52))
         );
 
         jPanel1.setBackground(new java.awt.Color(2, 64, 89));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Clientes");
+        jLabel4.setText("Usuarios");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -298,114 +313,139 @@ public class Clientes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextClientDocumentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextClientDocumentActionPerformed
+    private void jTextUserSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextUserSearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextClientDocumentActionPerformed
-
-    private void jTextClientSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextClientSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextClientSearchActionPerformed
+    }//GEN-LAST:event_jTextUserSearchActionPerformed
 
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
-        String search = jTextClientSearch.getText();
-        ArrayList<Client> clientList = new ArrayList<>(); 
+        String search = jTextUserSearch.getText();
+        ArrayList<User> userList = new ArrayList<>(); 
         
         if(search.isEmpty()){
-            clientList = clientCrud.getClients();
+            userList = usersCrud.getUsers();
         }else{
-            clientList = clientCrud.getClient(Long.parseLong(search));
+            userList = usersCrud.getUser(Long.parseLong(search));
         }       
         
         
-        String[][] dataTable = new String[clientList.size()][5];
+        String[][] dataTable = new String[userList.size()][5];
         
-        for (int i = 0; i < clientList.size(); i++) {
-            dataTable[i][0] = String.valueOf(clientList.get(i).getIdClient());
-            dataTable[i][1] = String.valueOf(clientList.get(i).getDocument());
-            dataTable[i][2] = clientList.get(i).getName();
-            dataTable[i][3] = clientList.get(i).getLastName();
-            dataTable[i][4] = clientList.get(i).getStatus();
+        for (int i = 0; i < userList.size(); i++) {
+            dataTable[i][0] = String.valueOf(userList.get(i).getIdUser());
+            dataTable[i][1] = String.valueOf(userList.get(i).getIdClient());
+            dataTable[i][2] = userList.get(i).getRol();            
+            dataTable[i][3] = userList.get(i).getStatus();
         }
         
-        jTableClientsList.setModel(new javax.swing.table.DefaultTableModel(
+        jTableUserList.setModel(new javax.swing.table.DefaultTableModel(
             dataTable,new String [] {
-                "Id Cliente", "Documento", "Nombre", "Apellido", "Estado"
+                "Id Usuario", "Usuario", "Rol", "Estado"
             }
-        ));          
+        ));       
     }//GEN-LAST:event_jButtonSearchActionPerformed
 
-    private void jTextClientNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextClientNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextClientNameActionPerformed
-
-    private void jTextClientLastnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextClientLastnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextClientLastnameActionPerformed
-
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        long clientDocument = Long.parseLong(this.jTextClientDocument.getText());
-        String clientName  = this.jTextClientName.getText();
-        String clientLastname = this.jTextClientLastname.getText();
-        String clientStatus = this.jComboBoxClientStatus.getSelectedItem().toString();        
+        long clientDocument = Long.parseLong(this.listDocuments.getSelectedItem().toString());
+        String pass  = String.valueOf(this.jPassword.getPassword());
+        String confirmPass  = String.valueOf(this.jConfirmPassword.getPassword());
+        String userRoll = this.jComboBoxRoll.getSelectedItem().toString();
+        String userStatus = this.jComboBoxClientStatus.getSelectedItem().toString();
+
+        if(pass.equals(confirmPass)){
+            if(pass.length() >=8){
+                User user = new User(clientDocument,pass,userRoll,userStatus);                
+
+                usersCrud.insertUsers(user);                
+            }else{
+                JOptionPane.showMessageDialog(null, "La contraseña debe ser mayor a 8 caracteres");
+            }               
+        }else{
+            JOptionPane.showMessageDialog(null, "Las contraseñas No coinciden");
+            this.jConfirmPassword.setText("");
+        }
+            
         
-        Client client = new Client(clientDocument,clientName,clientLastname,clientStatus);                
-        
-        clientCrud.insertClients(client);
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
-        selectRow = this.jTableClientsList.getSelectedRow();
+        selectRow = this.jTableUserList.getSelectedRow();
         int clientDocument,id;
-        String clientName,clientLastname,clientStatus,idClient;
+        String pass,confirmPass,userStatus,userRoll,idUser;
                 
-        if(this.jTableClientsList.getSelectedRow() != -1){
-            clientDocument = Integer.parseInt(this.jTextClientDocument.getText());
-            clientName  = this.jTextClientName.getText();
-            clientLastname = this.jTextClientLastname.getText();
-            clientStatus = this.jComboBoxClientStatus.getSelectedItem().toString();
-            idClient = (String) jTableClientsList.getValueAt(selectRow, 0);
-            id = Integer.parseInt(idClient);            
-            Client client = new Client(id, clientDocument, clientName, clientLastname, clientStatus);
-            clientCrud.updateClients(client);
+        if(this.jTableUserList.getSelectedRow() != -1){
+            clientDocument = Integer.parseInt(this.listDocuments.getSelectedItem().toString());
+            pass  = String.valueOf(this.jPassword.getPassword());
+            confirmPass  = String.valueOf(this.jConfirmPassword.getPassword());            
+            userRoll = this.jComboBoxRoll.getSelectedItem().toString();
+            userStatus = this.jComboBoxClientStatus.getSelectedItem().toString();
+            idUser = (String) jTableUserList.getValueAt(selectRow, 0);
+            id = Integer.parseInt(idUser);
+            if(pass.equals(confirmPass)){
+                if(pass.length() >=8){
+                    User user = new User(id,clientDocument,pass,userRoll,userStatus);                
+
+                    usersCrud.updateUsers(user); 
+                    this.clean();
+                }else{
+                    JOptionPane.showMessageDialog(null, "La contraseña debe ser mayor a 8 caracteres");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "Las contraseñas No coinciden");
+                this.jConfirmPassword.setText("");
+            }                
         }else{
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un elemento de la tabla");
         }
         
         
-        this.clean();
+        
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-        selectRow = this.jTableClientsList.getSelectedRow();
+        selectRow = this.jTableUserList.getSelectedRow();
         int id;
-        String idClient;
-        if(this.jTableClientsList.getSelectedRow() != -1){            
-            idClient = (String) jTableClientsList.getValueAt(selectRow, 0);
-            id = Integer.parseInt(idClient);                        
-            clientCrud.deleteClients(id);
+        String idUser;
+        if(this.jTableUserList.getSelectedRow() != -1){            
+            idUser = (String) jTableUserList.getValueAt(selectRow, 0);
+            id = Integer.parseInt(idUser);                        
+            usersCrud.deleteUsers(id);
         }else{
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un elemento de la tabla");
         }
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void loadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadDataActionPerformed
-        selectRow = this.jTableClientsList.getSelectedRow();
+       selectRow = this.jTableUserList.getSelectedRow();
         if(selectRow != -1){
-            this.jTextClientDocument.setText((String) jTableClientsList.getValueAt(selectRow, 1));
-            this.jTextClientName.setText((String) jTableClientsList.getValueAt(selectRow, 2));
-            this.jTextClientLastname.setText((String) jTableClientsList.getValueAt(selectRow, 3));        
-            this.jComboBoxClientStatus.getModel().setSelectedItem(jTableClientsList.getValueAt(selectRow, 4));
+            this.listDocuments.getModel().setSelectedItem(jTableUserList.getValueAt(selectRow, 1));
+            this.jComboBoxRoll.getModel().setSelectedItem(jTableUserList.getValueAt(selectRow, 2));
+            this.jComboBoxClientStatus.getModel().setSelectedItem(jTableUserList.getValueAt(selectRow, 3));
         }else{
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un elemento de la tabla");
         }
     }//GEN-LAST:event_loadDataActionPerformed
+
+    private void listDocumentsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_listDocumentsItemStateChanged
+       /* if(evt.getStateChange() == ItemEvent.SELECTED){
+            this.listDocuments.setModel(new DefaultComboBoxModel(documents()));
+        }*/
+    }//GEN-LAST:event_listDocumentsItemStateChanged
+    
+    public String[] documents(){
+        ArrayList<Long> documentsList = usersCrud.getDocuments(); 
+        String[] documents = new String[documentsList.size()];
+        for (int i = 0; i < documentsList.size(); i++) {
+            documents[i] = String.valueOf(documentsList.get(i));
+        }
+        return documents;
+    }
     
     public void clean(){
-        this.jTextClientDocument.setText("");
-        this.jTextClientName.setText("");
-        this.jTextClientLastname.setText("");        
-        this.jComboBoxClientStatus.setSelectedIndex(0);        
+        this.jComboBoxRoll.setSelectedIndex(0);
+        this.listDocuments.setSelectedIndex(0);
+        this.jComboBoxClientStatus.setSelectedIndex(0);
+        
     }
     /**
      * @param args the command line arguments
@@ -424,25 +464,31 @@ public class Clientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class
+            java.util.logging.Logger.getLogger(Usuarios.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class
+            java.util.logging.Logger.getLogger(Usuarios.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class
+            java.util.logging.Logger.getLogger(Usuarios.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Clientes.class
+            java.util.logging.Logger.getLogger(Usuarios.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Clientes().setVisible(true);
+                new Usuarios().setVisible(true);
             }
         });
     }
@@ -454,6 +500,8 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSave;
     private javax.swing.JButton jButtonSearch;
     private javax.swing.JComboBox<String> jComboBoxClientStatus;
+    private javax.swing.JComboBox<String> jComboBoxRoll;
+    private javax.swing.JPasswordField jConfirmPassword;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -461,13 +509,13 @@ public class Clientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPasswordField jPassword;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableClientsList;
-    private javax.swing.JTextField jTextClientDocument;
-    private javax.swing.JTextField jTextClientLastname;
-    private javax.swing.JTextField jTextClientName;
-    private javax.swing.JTextField jTextClientSearch;
+    private javax.swing.JTable jTableUserList;
+    private javax.swing.JTextField jTextUserSearch;
+    private javax.swing.JComboBox<String> listDocuments;
     private javax.swing.JButton loadData;
     // End of variables declaration//GEN-END:variables
 }
