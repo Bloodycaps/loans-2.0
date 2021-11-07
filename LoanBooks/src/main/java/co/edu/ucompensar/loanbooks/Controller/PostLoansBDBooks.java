@@ -122,7 +122,7 @@ public class PostLoansBDBooks {
             CallableStatement statement = connection.prepareCall("{call " + spName + "(?,?,?,?)}");
             int response = 1;
             
-            statement.setInt("@document", client.getDocument());
+            statement.setLong("@document", client.getDocument());
             statement.setString("@nameClient", client.getName());
             statement.setString("@lastNameCliente", client.getLastName());
             statement.setString("@status", client.getStatus());
@@ -167,6 +167,33 @@ public class PostLoansBDBooks {
         }        
         return clientList;
     }
+    
+    /**
+     * Metodo encargado de consultar clientes en la base de datos por documento.
+     */
+    public ArrayList getClient (long document){
+        String spName ="sp_get_client";
+        ArrayList<Client> clientList = new ArrayList<>(); 
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?)}");            
+            
+            statement.setLong("@document", document);
+                                    
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                Client client = new Client(result.getInt(1), result.getInt(2), result.getString(3),result.getString(4), result.getString(5));                
+                clientList.add(client);                
+            }                          
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_books" + e.toString(), "Error", 0);
+        } 
+        
+        return clientList;
+    }
 
     /**
      * Metodo encargado de Actualizar clientes en la base de datos.
@@ -180,7 +207,7 @@ public class PostLoansBDBooks {
             CallableStatement statement = connection.prepareCall("{call " + spName + "(?,?,?,?,?)}");
             int response = 1;
             
-            statement.setInt("@document", client.getDocument());
+            statement.setLong("@document", client.getDocument());
             statement.setString("@nameClient", client.getName());
             statement.setString("@lastNameClient", client.getLastName());
             statement.setString("@status", client.getStatus());
@@ -231,7 +258,5 @@ public class PostLoansBDBooks {
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_delete_books" + e.toString(), "Error", 0);
         } 
-    }
-    
-    
+    }   
 }

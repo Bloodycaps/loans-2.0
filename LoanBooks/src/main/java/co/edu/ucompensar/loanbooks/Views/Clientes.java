@@ -370,8 +370,16 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextClientSearchActionPerformed
 
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
+        String search = jTextClientSearch.getText();
         ArrayList<Client> clientList = new ArrayList<>(); 
-        clientList = clientCrud.getClients();
+        
+        if(search.isEmpty()){
+            clientList = clientCrud.getClients();
+        }else{
+            clientList = clientCrud.getClient(Long.parseLong(search));
+        }       
+        
+        
         String[][] dataTable = new String[clientList.size()][5];
         
         for (int i = 0; i < clientList.size(); i++) {
@@ -398,7 +406,7 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextClientLastnameActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        int clientDocument = Integer.parseInt(this.jTextClientDocument.getText());
+        long clientDocument = Long.parseLong(this.jTextClientDocument.getText());
         String clientName  = this.jTextClientName.getText();
         String clientLastname = this.jTextClientLastname.getText();
         String clientStatus = this.jComboBoxClientStatus.getSelectedItem().toString();        
@@ -430,12 +438,6 @@ public class Clientes extends javax.swing.JFrame {
         this.clean();
     }//GEN-LAST:event_jButtonEditActionPerformed
 
-    public void clean(){
-        this.jTextClientDocument.setText("");
-        this.jTextClientName.setText("");
-        this.jTextClientLastname.setText("");        
-        this.jComboBoxClientStatus.setSelectedIndex(0);        
-    }
     
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
         selectRow = this.jTableClientsList.getSelectedRow();
@@ -461,7 +463,13 @@ public class Clientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un elemento de la tabla");
         }
     }//GEN-LAST:event_loadDataActionPerformed
-
+    
+    public void clean(){
+        this.jTextClientDocument.setText("");
+        this.jTextClientName.setText("");
+        this.jTextClientLastname.setText("");        
+        this.jComboBoxClientStatus.setSelectedIndex(0);        
+    }
     /**
      * @param args the command line arguments
      */

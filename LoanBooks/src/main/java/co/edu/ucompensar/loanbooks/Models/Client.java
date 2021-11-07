@@ -12,12 +12,12 @@ import java.util.Objects;
  */
 public class Client {
     private int idClient;
-    private int document;
+    private long document;
     private String name;
     private String lastName;
     private String status;
 
-    public Client(int document, String name, String lastName, String status) {
+    public Client(long document, String name, String lastName, String status) {
         this.idClient = idClient;
         this.document = document;
         this.name = name;
@@ -25,7 +25,7 @@ public class Client {
         this.status = status;
     }
     
-    public Client(int idClient,int document, String name, String lastName, String status) {
+    public Client(int idClient,long document, String name, String lastName, String status) {
         this.idClient = idClient;
         this.document = document;
         this.name = name;
@@ -37,7 +37,7 @@ public class Client {
         return idClient;
     }
 
-    public int getDocument() {
+    public long getDocument() {
         return document;
     }
 
