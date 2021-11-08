@@ -13,13 +13,20 @@ import sun.security.util.Password;
  */
 public class User {
     private int idUser;
-    private Client idClient;
-    private Password password;
+    private long idClient;
+    private String password;
     private String rol;
     private String status;
 
-    public User(int idUser, Client idClient, Password password, String rol, String status) {
+    public User(int idUser, long idClient, String password, String rol, String status) {
         this.idUser = idUser;
+        this.idClient = idClient;
+        this.password = password;
+        this.rol = rol;
+        this.status = status;
+    }
+    
+    public User(long idClient, String password, String rol, String status) {        
         this.idClient = idClient;
         this.password = password;
         this.rol = rol;
@@ -30,11 +37,11 @@ public class User {
         return idUser;
     }
 
-    public Client getIdClient() {
+    public long getIdClient() {
         return idClient;
     }
 
-    public Password getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -50,11 +57,11 @@ public class User {
         this.idUser = idUser;
     }
 
-    public void setIdClient(Client idClient) {
+    public void setIdClient(long idClient) {
         this.idClient = idClient;
     }
 
-    public void setPassword(Password password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
