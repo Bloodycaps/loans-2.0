@@ -109,6 +109,7 @@
                                   <Component id="jButtonDelete" min="-2" pref="60" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jCmbCategory" max="32767" attributes="0"/>
+                              <Component id="jButtonLoan" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -175,7 +176,9 @@
                           <Component id="jScrollPane1" min="-2" pref="293" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="112" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="jButtonLoan" min="-2" pref="43" max="-2" attributes="0"/>
+                  <EmptySpace pref="44" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -393,6 +396,19 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonLoan">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Sacar prestamo"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLoanActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
