@@ -7,20 +7,24 @@ package co.edu.ucompensar.loanbooks.Controller;
 
 import co.edu.ucompensar.loanbooks.Models.Books;
 import co.edu.ucompensar.loanbooks.Models.Client;
+import co.edu.ucompensar.loanbooks.Models.Loan;
 import co.edu.ucompensar.loanbooks.Models.User;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static microsoft.sql.Types.DATETIME;
 
 /**
  *
  * @author Santiago
  */
 public class PostLoansBDBooks {
-    
+     
     /**
      * Metodo encargado de registrar libros en la base de datos.
      */
@@ -318,7 +322,7 @@ public class PostLoansBDBooks {
         } 
     }
     
-     /**
+    /**
      * Metodo encargado de Mostrar usuarios de la base de datos.
      */    
     public ArrayList getUsers (){
@@ -432,4 +436,124 @@ public class PostLoansBDBooks {
         } 
     }
     
+    /**
+     * Metodo encargado de Mostrar prestamos de la base de datos.
+     */    
+    public ArrayList getLoans (){
+        String spName ="sp_get_loans";
+        ArrayList<Loan> loansList = new ArrayList<>(); 
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "}");
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){                
+
+                    Loan loan = new Loan(result.getInt(1), result.getLong(2), result.getString(3),result.getString(4),result.getString(5));
+                    loansList.add(loan);                
+
+            }                        
+            result.close();           
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_loans " + e.toString(), "Error", 0);
+        }        
+        return loansList;
+    }
+    
+    /**
+     * Metodo encargado de consultar prestamos en la base de datos por documento.
+     */
+    public ArrayList getLoan (long document){
+        String spName ="sp_get_loan";
+        ArrayList<Loan> loansList = new ArrayList<>(); 
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?)}");            
+            
+            statement.setLong("@document", document);
+                                    
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                Loan loan = new Loan(result.getInt(1), result.getLong(2), result.getString(3),result.getString(4),result.getString(5));
+                    loansList.add(loan);                              
+            }                          
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_loan" + e.toString(), "Error", 0);
+        } 
+        
+        return loansList;
+    }
+    
+    /**
+     * Metodo encargado de registrar prestamos en la base de datos.
+     */
+    public void insertLoans (Loan loan){
+        String spName ="sp_insert_loans";
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?,?,?,?)}");
+            int response = 1;
+
+            statement.setLong("@user", loan.getUser());
+            statement.setString("@loanDate", String.valueOf(loan.getLoanDate()));
+            statement.setString("@expirationDate", String.valueOf(loan.getExpirationDate()));
+            statement.setString("@loanStatus", loan.getLoanStatus());
+                        
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                response = result.getInt(1);             
+            }
+            
+            if(response == 0){
+                JOptionPane.showMessageDialog(null, "El prestamos del usuario " + loan.getUser() + " se registro correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "Ocurrio un error intentando registrar el Prestamo", "Error", 0);                
+            }
+                        
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_loans" + e.toString(), "Error", 0);
+        } 
+    }
+    
+    
+       /**
+     * Metodo encargado de Actualizar prestamos en la base de datos.
+     */
+    public void updateLoans (Loan loan){
+        String spName ="sp_update_loans";
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?,?,?)}");
+            int response = 1;
+            
+            statement.setString("@expirationDate", loan.getExpirationDate());
+            statement.setString("@loanStatus", loan.getLoanStatus());
+            statement.setInt("@idLoan", loan.getIdLoan());
+                        
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                response = result.getInt(1);             
+            }
+            
+            if(response == 0){
+                JOptionPane.showMessageDialog(null, "El Prestamo se actualizo correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "Ocurrio un error intentando actualizar el prestamo", "Error", 0);                
+            }
+                        
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_update_loans" + e.toString(), "Error", 0);
+        } 
+    }
 }

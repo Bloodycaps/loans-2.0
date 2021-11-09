@@ -5,6 +5,7 @@
 package co.edu.ucompensar.loanbooks.Models;
 
 import java.util.Date;
+
 import java.util.Objects;
 
 /**
@@ -13,14 +14,21 @@ import java.util.Objects;
  */
 public class Loan {
     private int idLoan;
-    private User idUser;
-    private Date loanDate;
-    private Date expirationDate;
+    private long user;
+    private String  loanDate;
+    private String  expirationDate;
     private String loanStatus;
 
-    public Loan(int idLoan, User idUser, Date loanDate, Date expirationDate, String loanStatus) {
+    public Loan(int idLoan, long user, String  loanDate, String  expirationDate, String loanStatus) {
         this.idLoan = idLoan;
-        this.idUser = idUser;
+        this.user = user;
+        this.loanDate = loanDate;
+        this.expirationDate = expirationDate;
+        this.loanStatus = loanStatus;
+    }
+    
+    public Loan(long user, String  loanDate, String  expirationDate, String loanStatus) {        
+        this.user = user;
         this.loanDate = loanDate;
         this.expirationDate = expirationDate;
         this.loanStatus = loanStatus;
@@ -30,15 +38,15 @@ public class Loan {
         return idLoan;
     }
 
-    public User getIdUser() {
-        return idUser;
+    public long getUser() {
+        return user;
     }
 
-    public Date getLoanDate() {
+    public String  getLoanDate() {
         return loanDate;
     }
 
-    public Date getExpirationDate() {
+    public String  getExpirationDate() {
         return expirationDate;
     }
 
@@ -50,15 +58,15 @@ public class Loan {
         this.idLoan = idLoan;
     }
 
-    public void setIdUser(User idUser) {
-        this.idUser = idUser;
+    public void setUser(long user) {
+        this.user = user;
     }
 
-    public void setLoanDate(Date loanDate) {
+    public void setLoanDate(String  loanDate) {
         this.loanDate = loanDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(String  expirationDate) {
         this.expirationDate = expirationDate;
     }
 
@@ -66,50 +74,11 @@ public class Loan {
         this.loanStatus = loanStatus;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + this.idLoan;
-        hash = 89 * hash + Objects.hashCode(this.idUser);
-        hash = 89 * hash + Objects.hashCode(this.loanDate);
-        hash = 89 * hash + Objects.hashCode(this.expirationDate);
-        hash = 89 * hash + Objects.hashCode(this.loanStatus);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Loan other = (Loan) obj;
-        if (this.idLoan != other.idLoan) {
-            return false;
-        }
-        if (!Objects.equals(this.loanStatus, other.loanStatus)) {
-            return false;
-        }
-        if (!Objects.equals(this.idUser, other.idUser)) {
-            return false;
-        }
-        if (!Objects.equals(this.loanDate, other.loanDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.expirationDate, other.expirationDate)) {
-            return false;
-        }
-        return true;
-    }
+   
 
     @Override
     public String toString() {
-        return "Loan{" + "idLoan=" + idLoan + ", idUser=" + idUser + ", loanDate=" + loanDate + ", expirationDate=" + expirationDate + ", loanStatus=" + loanStatus + '}';
+        return "Loan{" + "idLoan=" + idLoan + ", idUser=" + user + ", loanDate=" + loanDate + ", expirationDate=" + expirationDate + ", loanStatus=" + loanStatus + '}';
     }
     
     
