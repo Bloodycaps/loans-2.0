@@ -8,6 +8,7 @@ package co.edu.ucompensar.loanbooks.Controller;
 import co.edu.ucompensar.loanbooks.Models.Books;
 import co.edu.ucompensar.loanbooks.Models.Client;
 import co.edu.ucompensar.loanbooks.Models.Loan;
+import co.edu.ucompensar.loanbooks.Models.LoanBooks;
 import co.edu.ucompensar.loanbooks.Models.User;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -28,8 +29,9 @@ public class PostLoansBDBooks {
     /**
      * Metodo encargado de registrar libros en la base de datos.
      */
-    public void readBook (){
+    public ArrayList getBooks (){
         String spName ="sp_get_books";
+        ArrayList<Books> bookList = new ArrayList<>(); 
         try{
             Connection connection;
             DBConnection conn = new DBConnection();
@@ -38,13 +40,16 @@ public class PostLoansBDBooks {
             ResultSet result = statement.executeQuery();
             
             while(result.next()){
-                System.out.println(result.getString(1)+" "+result.getString(2)+" "+result.getString(3)+" ");
+                
+                Books book = new Books(result.getInt(1), result.getString(2), result.getString(3),result.getString(4), result.getString(5), result.getInt(6), result.getInt(7));                
+                bookList.add(book);
             }
             
             result.close();           
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_books" + e.toString(), "Error", 0);
-        }        
+        }   
+        return bookList;
     }  
     
     /**
@@ -492,14 +497,14 @@ public class PostLoansBDBooks {
     /**
      * Metodo encargado de registrar prestamos en la base de datos.
      */
-    public void insertLoans (Loan loan){
+    public int insertLoans (Loan loan){
         String spName ="sp_insert_loans";
+        int response = 0;
         try{
             Connection connection;
             DBConnection conn = new DBConnection();
             connection = conn.starConnection();        
-            CallableStatement statement = connection.prepareCall("{call " + spName + "(?,?,?,?)}");
-            int response = 1;
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?,?,?,?)}");            
 
             statement.setLong("@user", loan.getUser());
             statement.setString("@loanDate", String.valueOf(loan.getLoanDate()));
@@ -513,18 +518,20 @@ public class PostLoansBDBooks {
             }
             
             if(response == 0){
-                JOptionPane.showMessageDialog(null, "El prestamos del usuario " + loan.getUser() + " se registro correctamente");
+                JOptionPane.showMessageDialog(null, "Ocurrio un error intentando registrar el Prestamo", "Error", 0);                                
             }else{
-                JOptionPane.showMessageDialog(null, "Ocurrio un error intentando registrar el Prestamo", "Error", 0);                
+                JOptionPane.showMessageDialog(null, "El prestamos del usuario " + loan.getUser() + " se registro correctamente. Numero Prestamo: "+response);
             }
                         
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_loans" + e.toString(), "Error", 0);
         } 
+        
+        return response;
     }
     
     
-       /**
+     /**
      * Metodo encargado de Actualizar prestamos en la base de datos.
      */
     public void updateLoans (Loan loan){
@@ -556,4 +563,65 @@ public class PostLoansBDBooks {
             JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_update_loans" + e.toString(), "Error", 0);
         } 
     }
+    
+    /**
+     * Metodo encargado de registrar los libros de los prestamos en la base de datos.
+     */
+    public void insertLoansBooks (ArrayList loanBooks,int loan){
+        String spName ="sp_insert_loansbooks";
+        ArrayList<Books> bookList = loanBooks; 
+         ResultSet result = null;
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?,?)}");
+            int response = 1;
+            for (int i = 0; i < loanBooks.size(); i++) {                
+                statement.setInt("@idBook", bookList.get(i).getIdBooks());
+                statement.setInt("@idLoan", loan);
+                result = statement.executeQuery();
+            }
+                                    
+            while(result.next()){
+                response = result.getInt(1);             
+            }
+            
+            if(response == 1){
+                JOptionPane.showMessageDialog(null, "Ocurrio un error intentando registrar el Prestamo", "Error", 0);                
+            }
+                        
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_loans" + e.toString(), "Error", 0);
+        } 
+    }
+    
+    /**
+     * Metodo encargado de consultar los libros de los prestamos en la base de datos por idLoans.
+     */
+    public ArrayList getLoansBooks (int idLoan){
+        String spName ="sp_get_book_loans";
+        ArrayList<LoanBooks> loanBooksList = new ArrayList<>(); 
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "(?)}");            
+            
+            statement.setLong("@idLoan", idLoan);
+                                    
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+               LoanBooks loanBook = new LoanBooks(result.getInt(1), result.getInt(2),result.getString(3),result.getString(4),result.getString(5));               
+               loanBooksList.add(loanBook);                
+            }                          
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_book_loans" + e.toString(), "Error", 0);
+        } 
+        
+        return loanBooksList;
+    }
+    
+    
 }

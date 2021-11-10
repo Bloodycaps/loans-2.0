@@ -12,76 +12,66 @@ import java.util.Objects;
  */
 public class LoanBooks {
 
-    private int idLoanBook;
-    private Books idBook;
-    private Loan idLoan;
+    private int idLoanBook;    
+    private int idLoan;
+    private String nameBook;
+    private String loanDate;
+    private String statusLoan;
 
-    public LoanBooks(int idLoanBook, Books idBook, Loan idLoan) {
-        this.idLoanBook = idLoanBook;
-        this.idBook = idBook;
+    public LoanBooks(int idLoanBook, int idLoan, String nameBook, String loanDate, String statusLoan) {
+        this.idLoanBook = idLoanBook;        
         this.idLoan = idLoan;
-    }
+        this.nameBook = nameBook;
+        this.loanDate = loanDate;
+        this.statusLoan = statusLoan;
+    }    
 
     public int getIdLoanBook() {
         return idLoanBook;
-    }
-
-    public Books getIdBook() {
-        return idBook;
-    }
-
-    public Loan getIdLoan() {
-        return idLoan;
     }
 
     public void setIdLoanBook(int idLoanBook) {
         this.idLoanBook = idLoanBook;
     }
 
-    public void setIdBook(Books idBook) {
-        this.idBook = idBook;
+    public int getIdLoan() {
+        return idLoan;
     }
 
-    public void setIdLoan(Loan idLoan) {
+    public void setIdLoan(int idLoan) {
         this.idLoan = idLoan;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + this.idLoanBook;
-        hash = 41 * hash + Objects.hashCode(this.idBook);
-        hash = 41 * hash + Objects.hashCode(this.idLoan);
-        return hash;
+    public String getNameBook() {
+        return nameBook;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final LoanBooks other = (LoanBooks) obj;
-        if (this.idLoanBook != other.idLoanBook) {
-            return false;
-        }
-        if (!Objects.equals(this.idBook, other.idBook)) {
-            return false;
-        }
-        if (!Objects.equals(this.idLoan, other.idLoan)) {
-            return false;
-        }
-        return true;
+    public void setNameBook(String nameBook) {
+        this.nameBook = nameBook;
+    }
+
+    public String getLoanDate() {
+        return loanDate;
+    }
+
+    public void setLoanDate(String loanDate) {
+        this.loanDate = loanDate;
+    }
+
+    public String getStatusLoan() {
+        return statusLoan;
+    }
+
+    public void setStatusLoan(String statusLoan) {
+        this.statusLoan = statusLoan;
     }
 
     @Override
     public String toString() {
-        return "LoanBooks{" + "idLoanBook=" + idLoanBook + ", idBook=" + idBook + ", idLoan=" + idLoan + '}';
+        return "LoanBooks{" + "idLoanBook=" + idLoanBook + ", idLoan=" + idLoan + ", nameBook=" + nameBook + ", loanDate=" + loanDate + ", statusLoan=" + statusLoan + '}';
     }
+    
+    
+    
 
 }
