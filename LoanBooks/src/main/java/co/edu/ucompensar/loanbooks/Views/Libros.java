@@ -443,7 +443,7 @@ public class Libros extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLoanActionPerformed
 
     private void cargarTabla() {
-        bookCRUD.readBook();
+        bookCRUD.getBooks();
     }
 
     private void cleanDataBook() {
