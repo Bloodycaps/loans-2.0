@@ -26,21 +26,175 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jDeskWindow = new javax.swing.JDesktopPane();
+        jButtonBooks = new javax.swing.JButton();
+        jButtonClients = new javax.swing.JButton();
+        jButtonUsers = new javax.swing.JButton();
+        jButtonLoans = new javax.swing.JButton();
+        jButtonPenaltys = new javax.swing.JButton();
+        jButtonAbout = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(2, 64, 89));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Principal");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(257, 257, 257)
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        jDeskWindow.setBackground(new java.awt.Color(255, 255, 255));
+
+        jButtonBooks.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        jButtonBooks.setText("Libros");
+        jButtonBooks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBooksActionPerformed(evt);
+            }
+        });
+
+        jButtonClients.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        jButtonClients.setText("Clientes");
+        jButtonClients.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonClientsActionPerformed(evt);
+            }
+        });
+
+        jButtonUsers.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        jButtonUsers.setText("Usuarios");
+        jButtonUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUsersActionPerformed(evt);
+            }
+        });
+
+        jButtonLoans.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        jButtonLoans.setText("Prestamos");
+        jButtonLoans.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLoansActionPerformed(evt);
+            }
+        });
+
+        jButtonPenaltys.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        jButtonPenaltys.setText("Multas");
+
+        jButtonAbout.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        jButtonAbout.setText("Nosotros");
+        jButtonAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAboutActionPerformed(evt);
+            }
+        });
+
+        jDeskWindow.setLayer(jButtonBooks, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDeskWindow.setLayer(jButtonClients, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDeskWindow.setLayer(jButtonUsers, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDeskWindow.setLayer(jButtonLoans, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDeskWindow.setLayer(jButtonPenaltys, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDeskWindow.setLayer(jButtonAbout, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jDeskWindowLayout = new javax.swing.GroupLayout(jDeskWindow);
+        jDeskWindow.setLayout(jDeskWindowLayout);
+        jDeskWindowLayout.setHorizontalGroup(
+            jDeskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDeskWindowLayout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addGroup(jDeskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDeskWindowLayout.createSequentialGroup()
+                        .addComponent(jButtonUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
+                        .addComponent(jButtonAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDeskWindowLayout.createSequentialGroup()
+                        .addComponent(jButtonBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonLoans, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDeskWindowLayout.createSequentialGroup()
+                        .addComponent(jButtonClients, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonPenaltys, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(115, 115, 115))
+        );
+        jDeskWindowLayout.setVerticalGroup(
+            jDeskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDeskWindowLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(jDeskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonLoans, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(jDeskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonClients, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPenaltys, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(48, 48, 48)
+                .addGroup(jDeskWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(164, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jDeskWindow)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDeskWindow))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAboutActionPerformed
+        Nosotros aboutUs = new Nosotros();
+        jDeskWindow.add(aboutUs);
+        aboutUs.show();
+    }//GEN-LAST:event_jButtonAboutActionPerformed
+
+    private void jButtonBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBooksActionPerformed
+        Libros books = new Libros();
+        books.setVisible(true);
+    }//GEN-LAST:event_jButtonBooksActionPerformed
+
+    private void jButtonClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClientsActionPerformed
+        Clientes clients = new Clientes();
+        clients.setVisible(true);
+    }//GEN-LAST:event_jButtonClientsActionPerformed
+
+    private void jButtonUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUsersActionPerformed
+        Usuarios users = new Usuarios();
+        users.setVisible(true);
+    }//GEN-LAST:event_jButtonUsersActionPerformed
+
+    private void jButtonLoansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoansActionPerformed
+        Prestamos loans = new Prestamos();
+        loans.setVisible(true);
+    }//GEN-LAST:event_jButtonLoansActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +232,14 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAbout;
+    private javax.swing.JButton jButtonBooks;
+    private javax.swing.JButton jButtonClients;
+    private javax.swing.JButton jButtonLoans;
+    private javax.swing.JButton jButtonPenaltys;
+    private javax.swing.JButton jButtonUsers;
+    private javax.swing.JDesktopPane jDeskWindow;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
