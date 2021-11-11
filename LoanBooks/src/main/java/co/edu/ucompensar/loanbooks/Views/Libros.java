@@ -58,7 +58,6 @@ public class Libros extends javax.swing.JFrame {
         jButtonEdit = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
         jCmbCategory = new javax.swing.JComboBox<>();
-        jButtonLoan = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -175,14 +174,6 @@ public class Libros extends javax.swing.JFrame {
             }
         });
 
-        jButtonLoan.setText("Sacar prestamo");
-        jButtonLoan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButtonLoan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLoanActionPerformed(evt);
-            }
-        });
-
         escritorio.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jTextBookSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -202,7 +193,6 @@ public class Libros extends javax.swing.JFrame {
         escritorio.setLayer(jButtonEdit, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonDelete, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jCmbCategory, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        escritorio.setLayer(jButtonLoan, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -247,8 +237,7 @@ public class Libros extends javax.swing.JFrame {
                                 .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jCmbCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jCmbCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(8, 8, 8))
         );
         escritorioLayout.setVerticalGroup(
@@ -297,9 +286,7 @@ public class Libros extends javax.swing.JFrame {
                     .addGroup(escritorioLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(25, 25, 25)
-                .addComponent(jButtonLoan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(2, 64, 89));
@@ -436,12 +423,6 @@ public class Libros extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCmbCategoryActionPerformed
 
-    private void jButtonLoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoanActionPerformed
-        Prestamos prestamo = new Prestamos();
-        escritorio.add(prestamo);
-        prestamo.show();
-    }//GEN-LAST:event_jButtonLoanActionPerformed
-
     private void cargarTabla() {
         bookCRUD.getBooks();
     }
@@ -498,7 +479,6 @@ public class Libros extends javax.swing.JFrame {
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonEdit;
-    private javax.swing.JButton jButtonLoan;
     private javax.swing.JButton jButtonSave;
     private javax.swing.JButton jButtonSearch;
     private javax.swing.JComboBox<String> jCmbCategory;
