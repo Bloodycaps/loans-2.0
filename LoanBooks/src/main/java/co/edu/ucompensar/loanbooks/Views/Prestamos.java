@@ -5,6 +5,14 @@
 package co.edu.ucompensar.loanbooks.Views;
 
 import co.edu.ucompensar.loanbooks.Controller.PostLoansBDBooks;
+import co.edu.ucompensar.loanbooks.Models.Books;
+import co.edu.ucompensar.loanbooks.Models.Client;
+import co.edu.ucompensar.loanbooks.Models.Loan;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,12 +22,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Prestamos extends javax.swing.JFrame {
 
-    PostLoansBDBooks bookCRUD = new PostLoansBDBooks();
+    PostLoansBDBooks loanCRUD = new PostLoansBDBooks();
+    int selectRow = -1, i = 0;
+     String[][] dataTableLoan = new String[5][7];
+    
+    
 
     /**
      * Creates new form Prestamos
      */
     public Prestamos() {
+        
         initComponents();
         cargarTabla();
     }
@@ -39,17 +52,17 @@ public class Prestamos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableBooksListLoans = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableBooksList = new javax.swing.JTable();
+        jTableAllBooksList = new javax.swing.JTable();
         jButtonLoanBooks = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextFieldClientIdentification = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jFormattedLoanDate = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
-        jFormattedLoanReturn = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jStatus = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jUsersList = new javax.swing.JComboBox<>();
+        jDateChooser = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,23 +109,12 @@ public class Prestamos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableBooksListLoans);
 
-        jTableBooksList.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Nombre del libro", "Autor", "Editorial", "Categoria", "Año de Publicacion", "Cantidad"
+        jTableAllBooksList.setModel(new javax.swing.table.DefaultTableModel(
+            cargarTabla(),new String [] {
+                "Id Book", "Nombre", "Autor", "Editorial", "categoria","Año","Stock"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(jTableBooksList);
+        ));
+        jScrollPane2.setViewportView(jTableAllBooksList);
 
         jButtonLoanBooks.setText(">>");
         jButtonLoanBooks.addActionListener(new java.awt.event.ActionListener() {
@@ -121,95 +123,104 @@ public class Prestamos extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Documento del cliente");
+        jLabel1.setText("Usuario");
 
         jLabel2.setText("Fecha del prestamo");
 
+        jFormattedLoanDate.setEditable(false);
         jFormattedLoanDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jFormattedLoanDate.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedLoanDate.setText("d/MM/yyyy");
+        jFormattedLoanDate.setText(fechaActual());
         jFormattedLoanDate.setToolTipText("");
+        jFormattedLoanDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedLoanDateActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("Fecha de devolucion");
-
-        jFormattedLoanReturn.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-        jFormattedLoanReturn.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedLoanReturn.setText("d/MM/yyyy");
-        jFormattedLoanReturn.setToolTipText("");
+        jLabel3.setText("Fecha de devolución");
 
         jLabel5.setText("Estado del prestamo");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "En préstamo", "Devuelto", "Vencido", "Devuelto vencido" }));
+        jStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "En préstamo", "Devuelto", "Vencido", "Devuelto vencido" }));
 
         jButton1.setText("Crear Prestamo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jUsersList.setModel(new DefaultComboBoxModel(documentsUsers()));
+        jUsersList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jUsersListActionPerformed(evt);
+            }
+        });
+
+        jDateChooser.setMinSelectableDate(new java.util.Date(1637215302000L));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)
                         .addComponent(jButtonLoanBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldClientIdentification, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedLoanDate, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jStatus, javax.swing.GroupLayout.Alignment.LEADING, 0, 134, Short.MAX_VALUE)
+                            .addComponent(jUsersList, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jFormattedLoanDate))
+                        .addGap(109, 109, 109)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jFormattedLoanReturn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextFieldClientIdentification, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)
-                        .addComponent(jFormattedLoanDate)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel3)
-                        .addComponent(jFormattedLoanReturn)))
-                .addGap(32, 32, 32)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jUsersList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(120, 120, 120)
+                    .addComponent(jStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jFormattedLoanDate, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(21, 21, 21))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jButtonLoanBooks)
-                            .addGap(158, 158, 158)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButtonLoanBooks)
+                        .addGap(172, 172, 172)))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -231,27 +242,119 @@ public class Prestamos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonLoanBooksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoanBooksActionPerformed
-        JTable BooksList = null, BooksListLoans = null;
-
-        DefaultTableModel tmO = (DefaultTableModel) BooksList.getModel(),
-                tmD = (DefaultTableModel) BooksListLoans.getModel();
-
-        if (BooksList.getSelectedRowCount() > 0) {
-            int[] indices = BooksList.getSelectedRows();
-            for (int i : indices) {
-                Object[] fila = new Object[tmO.getColumnCount()];
-                for (int j = 0; j < fila.length; j++) {
-                    fila[j] = tmO.getValueAt(i, j);
-                }
-                tmD.addRow(fila);
+        selectRow = this.jTableAllBooksList.getSelectedRow();
+       // System.out.println("i:" + i);
+        if(selectRow != -1){
+            if(i<5){
+                
+                dataTableLoan[i][0] = String.valueOf(jTableAllBooksList.getValueAt(selectRow, 0));
+                dataTableLoan[i][1] = String.valueOf(jTableAllBooksList.getValueAt(selectRow, 1));
+                dataTableLoan[i][2] = String.valueOf(jTableAllBooksList.getValueAt(selectRow, 2));
+                dataTableLoan[i][3] = String.valueOf(jTableAllBooksList.getValueAt(selectRow, 3));
+                dataTableLoan[i][4] = String.valueOf(jTableAllBooksList.getValueAt(selectRow, 4));
+                dataTableLoan[i][5] = String.valueOf(jTableAllBooksList.getValueAt(selectRow, 5));
+                dataTableLoan[i][6] = String.valueOf(jTableAllBooksList.getValueAt(selectRow, 6));       
+                i++;            
+            
+                jTableBooksListLoans.setModel(new javax.swing.table.DefaultTableModel(
+                dataTableLoan,new String [] {
+                     "Id Book", "Nombre", "Autor", "Editorial", "categoria","Año","Stock"
+                } 
+                ));  
+                
+                //System.out.println("jTableBooksListLoans Count "+ jTableBooksListLoans.getRowCount());
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Solo puede pedir prestados 5 libros");
             }
-        }
-
-
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un elemento de la tabla");
+        }   
     }//GEN-LAST:event_jButtonLoanBooksActionPerformed
 
-    private void cargarTabla() {
-        bookCRUD.getBooks();
+    public String[] documentsUsers(){
+        ArrayList<Long> documentsList = loanCRUD.getDocumentsUsers(); 
+        String[] documents = new String[documentsList.size()];
+        for (int i = 0; i < documentsList.size(); i++) {
+            documents[i] = String.valueOf(documentsList.get(i));
+        }
+        return documents;
+    }
+    
+    private void jFormattedLoanDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedLoanDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedLoanDateActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        SimpleDateFormat formatDate = new SimpleDateFormat("YYYY/MM/dd");
+        ArrayList<Books> bookListLoan = new ArrayList<>();         
+        
+        Long user = Long.parseLong(this.jUsersList.getSelectedItem().toString());
+        String loanDate = this.jFormattedLoanDate.getText();        
+        Date expirationDate = this.jDateChooser.getDate();
+        String status = this.jStatus.getSelectedItem().toString();        
+        
+        //jTableBooksListLoans
+                
+        for (int j = 0; j < jTableBooksListLoans.getRowCount(); j++) {            
+            if(jTableBooksListLoans.getValueAt(j, 0) != null){                
+               Books book = new Books(Integer.parseInt(jTableBooksListLoans.getValueAt(j, 0).toString()),
+                                    String.valueOf(jTableBooksListLoans.getValueAt(j, 0)),
+                                    String.valueOf(jTableBooksListLoans.getValueAt(j, 0)),
+                                    String.valueOf(jTableBooksListLoans.getValueAt(j, 0)),
+                                    String.valueOf(jTableBooksListLoans.getValueAt(j, 0)),
+                                    Integer.parseInt(jTableBooksListLoans.getValueAt(j, 0).toString()),
+                                    Integer.parseInt(jTableBooksListLoans.getValueAt(j, 0).toString())
+                                    );
+               bookListLoan.add(book);
+            }
+        }
+        System.out.println("Array"+ bookListLoan.isEmpty());
+        System.out.println("DaSf"+ expirationDate);
+        
+        if(expirationDate != null){
+            if(status != "Seleccione"){
+                if(!bookListLoan.isEmpty()){
+                    
+                    String expirationDateFormat = formatDate.format(expirationDate);
+                    System.out.println("DaSf"+ expirationDateFormat);
+                    Loan loan = new Loan(user,loanDate,expirationDateFormat,status);     
+                    int loanId = loanCRUD.insertLoans(loan);
+                    loanCRUD.insertLoansBooks(bookListLoan, loanId);
+                    
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "debe seleccionar 1 libro","Error",0);
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "El valor de campo Estado es invalido","Error",0);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "El valor de campo Fecha de devolución es invalido","Error",0);
+        }
+        
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jUsersListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jUsersListActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jUsersListActionPerformed
+
+    private String[][] cargarTabla() {
+        ArrayList<Books> booksList = new ArrayList<>(); 
+         booksList = loanCRUD.getBooks();
+         
+        String[][] dataTable = new String[booksList.size()][7];
+        
+        for (int i = 0; i < booksList.size(); i++) {
+            dataTable[i][0] = String.valueOf(booksList.get(i).getIdBooks());
+            dataTable[i][1] = booksList.get(i).getName();
+            dataTable[i][2] = booksList.get(i).getAuthor();
+            dataTable[i][3] = booksList.get(i).getEditorial();
+            dataTable[i][4] = booksList.get(i).getCategory();
+            dataTable[i][5] = String.valueOf(booksList.get(i).getYear());
+            dataTable[i][6] = String.valueOf(booksList.get(i).getQuantity());
+        }                
+        return dataTable;
     }
 
     /**
@@ -280,21 +383,29 @@ public class Prestamos extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Prestamos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Prestamos().setVisible(true);
+                new Prestamos().setVisible(true);                
+                
             }
         });
     }
 
+    public static String fechaActual(){
+    
+        Date fecha=new Date();
+        SimpleDateFormat formatoFecha=new SimpleDateFormat("YYYY/MM/dd");
+
+        return formatoFecha.format(fecha);
+    
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonLoanBooks;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JFormattedTextField jFormattedLoanDate;
-    private javax.swing.JFormattedTextField jFormattedLoanReturn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -304,8 +415,9 @@ public class Prestamos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableBooksList;
+    private javax.swing.JComboBox<String> jStatus;
+    private javax.swing.JTable jTableAllBooksList;
     private javax.swing.JTable jTableBooksListLoans;
-    private javax.swing.JTextField jTextFieldClientIdentification;
+    private javax.swing.JComboBox<String> jUsersList;
     // End of variables declaration//GEN-END:variables
 }

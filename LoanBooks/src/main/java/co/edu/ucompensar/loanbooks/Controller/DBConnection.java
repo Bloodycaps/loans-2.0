@@ -27,7 +27,7 @@ public class DBConnection {
         try{
             String command = "jdbc:sqlserver://" + IP + ":" + PORT + ";databaseName=" + DATABASE;
             connection = DriverManager.getConnection(command,USER,PASSWORD);           
-            JOptionPane.showMessageDialog(null, "Se conecto correctamente a Loans");
+          //  JOptionPane.showMessageDialog(null, "Se conecto correctamente a Loans");
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "No se establecio correctamente la conexión :" + e.toString(), "Error", 0);
         }

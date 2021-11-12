@@ -69,10 +69,22 @@ public class PostLoansBDBooks {
             statement.setString("@category", book.getCategory());
             statement.setInt("@year", book.getYear());
             statement.setInt("@cuantity", book.getQuantity());
+            int response = 1;
             
             statement.execute();
             
-            System.out.println("Ok");            
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                response = result.getInt(1);             
+            }
+            
+            if(response == 0){
+                JOptionPane.showMessageDialog(null, "El usuario " + book.getName()+ " se registro correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "Ocurrio un error intentando registrar el usuario", "Error", 0);                
+            }
+                      
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_books" + e.toString(), "Error", 0);
         } 
@@ -195,7 +207,7 @@ public class PostLoansBDBooks {
             ResultSet result = statement.executeQuery();
             
             while(result.next()){
-                Client client = new Client(result.getInt(1), result.getInt(2), result.getString(3),result.getString(4), result.getString(5));                
+                Client client = new Client(result.getInt(1), result.getLong(2), result.getString(3),result.getString(4), result.getString(5));                
                 clientList.add(client);                
             }                          
         }catch(SQLException e){
@@ -291,6 +303,29 @@ public class PostLoansBDBooks {
             JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_documents" + e.toString(), "Error", 0);
         }        
         return documentList;
+    }
+    
+    /**
+     * Metodo encargado de traer los documentos de la base de datos.
+     */    
+    public ArrayList getDocumentsUsers(){
+        String spName ="sp_get_documents_users";
+        ArrayList<Long> documentUserList = new ArrayList<>(); 
+        try{
+            Connection connection;
+            DBConnection conn = new DBConnection();
+            connection = conn.starConnection();        
+            CallableStatement statement = connection.prepareCall("{call " + spName + "}");
+            ResultSet result = statement.executeQuery();
+            
+            while(result.next()){
+                documentUserList.add(result.getLong(1));                                
+            }                        
+            result.close();           
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_get_documents_users " + e.toString(), "Error", 0);
+        }        
+        return documentUserList;
     }
     
     /**
@@ -592,7 +627,7 @@ public class PostLoansBDBooks {
             }
                         
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_loans" + e.toString(), "Error", 0);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error en el Procedimiento Almacenado: sp_insert_loansbooks " + e.toString(), "Error", 0);
         } 
     }
     

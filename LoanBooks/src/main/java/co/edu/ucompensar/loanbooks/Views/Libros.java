@@ -3,6 +3,7 @@ package co.edu.ucompensar.loanbooks.Views;
 import co.edu.ucompensar.loanbooks.Controller.PostLoansBDBooks;
 import co.edu.ucompensar.loanbooks.Models.Books;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -51,13 +52,13 @@ public class Libros extends javax.swing.JFrame {
         jTextEditorialBook = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jFormattedYear = new javax.swing.JFormattedTextField();
         jLabel9 = new javax.swing.JLabel();
         jSpinnerQuantity = new javax.swing.JSpinner();
         jButtonSave = new javax.swing.JButton();
         jButtonEdit = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
         jCmbCategory = new javax.swing.JComboBox<>();
+        jFormattedYear = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -115,7 +116,7 @@ public class Libros extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Autor");
+        jLabel2.setText("Autor Libro");
 
         jTextBookAuthor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,15 +136,11 @@ public class Libros extends javax.swing.JFrame {
 
         jLabel8.setText("Año de publicacion");
 
-        jFormattedYear.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy"))));
-        jFormattedYear.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedYear.setText("2021");
-
         jLabel9.setText("Cantidad");
 
         jSpinnerQuantity.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
-        jButtonSave.setText("Guardar");
+        jButtonSave.setText("Registrar");
         jButtonSave.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,6 +171,10 @@ public class Libros extends javax.swing.JFrame {
             }
         });
 
+        jFormattedYear.setMaximumSize(new java.awt.Dimension(2022, 2022));
+        jFormattedYear.setMinimumSize(new java.awt.Dimension(1000, 1000));
+        jFormattedYear.setPreferredSize(new java.awt.Dimension(20, 30));
+
         escritorio.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jTextBookSearch, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -186,13 +187,13 @@ public class Libros extends javax.swing.JFrame {
         escritorio.setLayer(jTextEditorialBook, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        escritorio.setLayer(jFormattedYear, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jSpinnerQuantity, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonSave, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonEdit, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jButtonDelete, javax.swing.JLayeredPane.DEFAULT_LAYER);
         escritorio.setLayer(jCmbCategory, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(jFormattedYear, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -212,49 +213,48 @@ public class Libros extends javax.swing.JFrame {
                     .addGroup(escritorioLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(escritorioLayout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextBookAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(escritorioLayout.createSequentialGroup()
-                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextBookName, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                            .addComponent(jTextEditorialBook, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                            .addComponent(jFormattedYear, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSpinnerQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(escritorioLayout.createSequentialGroup()
-                                .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jCmbCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(8, 8, 8))
+                    .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTextEditorialBook, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                        .addComponent(jSpinnerQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(escritorioLayout.createSequentialGroup()
+                            .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jCmbCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextBookName, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextBookAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedYear, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(escritorioLayout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextBookSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
                 .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(escritorioLayout.createSequentialGroup()
-                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(9, 9, 9)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextBookSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(escritorioLayout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(jTextBookName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextBookName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextBookAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -273,7 +273,7 @@ public class Libros extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(jFormattedYear, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jFormattedYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
@@ -282,11 +282,8 @@ public class Libros extends javax.swing.JFrame {
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(escritorioLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(112, Short.MAX_VALUE))
+                            .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(2, 64, 89));
@@ -341,20 +338,26 @@ public class Libros extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextBookSearchActionPerformed
 
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
-        // TODO add your handling code here:
-        String[][] dataTable = new String[booksList.size()][5];
-
+        String search = jTextBookSearch.getText();
+         if(search.isEmpty()){
+            booksList = bookCRUD.getBooks();
+        }else{
+            //booksList = bookCRUD.getBooks(Long.parseLong(search));
+        }  
+        String[][] dataTable = new String[booksList.size()][7];
+        
         for (int i = 0; i < booksList.size(); i++) {
-            dataTable[i][0] = booksList.get(i).getName();
-            dataTable[i][1] = booksList.get(i).getAuthor();
-            dataTable[i][2] = booksList.get(i).getEditorial();
-            dataTable[i][3] = booksList.get(i).getCategory();
-            dataTable[i][4] = String.valueOf(booksList.get(i).getYear());
-            dataTable[i][5] = String.valueOf(booksList.get(i).getQuantity());
+            dataTable[i][0] = String.valueOf(booksList.get(i).getIdBooks());
+            dataTable[i][1] = booksList.get(i).getName();
+            dataTable[i][2] = booksList.get(i).getAuthor();
+            dataTable[i][3] = booksList.get(i).getEditorial();
+            dataTable[i][4] = booksList.get(i).getCategory();
+            dataTable[i][5] = String.valueOf(booksList.get(i).getYear());
+            dataTable[i][6] = String.valueOf(booksList.get(i).getQuantity());
         }
         jTableBooksList.setModel(new javax.swing.table.DefaultTableModel(
                 dataTable, new String[]{
-                    "Nombre del libro", "Autor", "Editorial", "Categoria", "Año de Publicacion", "Cantidad"
+                    "IdLibro","Nombre del libro", "Autor", "Editorial", "Categoria", "Año de Publicacion", "Cantidad"
                 }
         ));
 
@@ -369,16 +372,46 @@ public class Libros extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextEditorialBookActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        String bookName = jTextBookName.getText();
-        String bookAuthor = jTextBookAuthor.getText();
-        String bookEditorial = jTextEditorialBook.getText();
-        String category = jCmbCategory.getSelectedItem().toString();
-        int year = (Integer) jFormattedYear.getValue();
-        int quantity = (Integer) jSpinnerQuantity.getValue();
+        try{                    
+            String bookName = jTextBookName.getText();
+            String bookAuthor = jTextBookAuthor.getText();
+            String bookEditorial = jTextEditorialBook.getText();
+            String category = jCmbCategory.getSelectedItem().toString();
+            int year = Integer.parseInt(jFormattedYear.getValue().toString());
+            int quantity = Integer.parseInt(jSpinnerQuantity.getValue().toString());
 
-        Books book = new Books(bookName, bookAuthor, bookEditorial, category, year, quantity);
+            if(!bookName.isEmpty()){
+                if(!bookAuthor.isEmpty()){
+                    if(!bookEditorial.isEmpty()){
+                        if(category!="Seleccione"){
+                            if(year>999 && year<2022){
+                                if(quantity!=0){
+                                   Books book = new Books(bookName, bookAuthor, bookEditorial, category, year, quantity);       
+                                   bookCRUD.insertBook(book);  
+                                }else{
+                                    JOptionPane.showMessageDialog(rootPane, "Debe ingresar minimo 1 Unidad","Error",0);
+                                }
+                            }else{
+                                 JOptionPane.showMessageDialog(rootPane, "El valor de campo año es invalido","Error",0);
+                            }
+                        }else{
+                             JOptionPane.showMessageDialog(rootPane, "El valor de campo Category es invalido","Error",0);
+                        }
+                    }else{
+                         JOptionPane.showMessageDialog(rootPane, "El valor de campo Editorial es invalido","Error",0);
+                    }
+                }else{
+                     JOptionPane.showMessageDialog(rootPane, "El valor de campo Autor es invalido","Error",0);
+                }
+            }else{
+                 JOptionPane.showMessageDialog(rootPane, "El valor de campo Nombre es invalido","Error",0);
+            }
         
-        bookCRUD.insertBook(book);
+        }catch(NullPointerException n){
+            JOptionPane.showMessageDialog(rootPane, "Por favor complete los datos","Error",0);
+        }
+       
+        
         //cleanDataBook();
         //cargarTabla();
     }//GEN-LAST:event_jButtonSaveActionPerformed
@@ -432,7 +465,7 @@ public class Libros extends javax.swing.JFrame {
         jTextBookAuthor.setText("");
         jTextEditorialBook.setText("");
         jCmbCategory.setSelectedIndex(0);
-        jFormattedYear.setText("");
+        
         jSpinnerQuantity.setValue(0);
     }
 
@@ -482,7 +515,7 @@ public class Libros extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSave;
     private javax.swing.JButton jButtonSearch;
     private javax.swing.JComboBox<String> jCmbCategory;
-    private javax.swing.JFormattedTextField jFormattedYear;
+    private javax.swing.JSpinner jFormattedYear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

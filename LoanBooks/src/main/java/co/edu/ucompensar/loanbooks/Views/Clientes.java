@@ -343,14 +343,37 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextClientLastnameActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
-        long clientDocument = Long.parseLong(this.jTextClientDocument.getText());
-        String clientName  = this.jTextClientName.getText();
-        String clientLastname = this.jTextClientLastname.getText();
-        String clientStatus = this.jComboBoxClientStatus.getSelectedItem().toString();        
+        try{
+            long clientDocument = Long.parseLong(this.jTextClientDocument.getText());
+            String clientName  = this.jTextClientName.getText();
+            String clientLastname = this.jTextClientLastname.getText();
+            String clientStatus = this.jComboBoxClientStatus.getSelectedItem().toString();
+
+            if(clientDocument != 0){
+                if(!clientName.isEmpty()){
+                    if(!clientLastname.isEmpty()){
+                        if(clientStatus != "Seleccione"){
+                            Client client = new Client(clientDocument,clientName,clientLastname,clientStatus);                
+                            clientCrud.insertClients(client);
+                        }else{
+                            JOptionPane.showMessageDialog(rootPane, "El valor de campo Estado es invalido","Error",0);
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "El valor de campo Apellido es invalido","Error",0);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "El valor de campo Nombre es invalido","Error",0);
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "El valor de campo documento es invalido","Error",0);
+            }
+
+            
+            
+        }catch(NumberFormatException efn){
+            JOptionPane.showMessageDialog(rootPane, "El Documento no debe de estar vacio y debe ser numerico","Error",0);
+        }
         
-        Client client = new Client(clientDocument,clientName,clientLastname,clientStatus);                
-        
-        clientCrud.insertClients(client);
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
@@ -359,20 +382,39 @@ public class Clientes extends javax.swing.JFrame {
         String clientName,clientLastname,clientStatus,idClient;
                 
         if(this.jTableClientsList.getSelectedRow() != -1){
+            
             clientDocument = Integer.parseInt(this.jTextClientDocument.getText());
             clientName  = this.jTextClientName.getText();
             clientLastname = this.jTextClientLastname.getText();
             clientStatus = this.jComboBoxClientStatus.getSelectedItem().toString();
-            idClient = (String) jTableClientsList.getValueAt(selectRow, 0);
-            id = Integer.parseInt(idClient);            
-            Client client = new Client(id, clientDocument, clientName, clientLastname, clientStatus);
-            clientCrud.updateClients(client);
+            
+            if(clientDocument != 0){
+                if(!clientName.isEmpty()){
+                    if(!clientLastname.isEmpty()){
+                        if(clientStatus != "Seleccione"){
+                            idClient = (String) jTableClientsList.getValueAt(selectRow, 0);                        
+                            id = Integer.parseInt(idClient);            
+                            Client client = new Client(id, clientDocument, clientName, clientLastname, clientStatus);
+                            clientCrud.updateClients(client);
+                            this.clean();
+                         }else{
+                            JOptionPane.showMessageDialog(rootPane, "El valor de campo Estado es invalido","Error",0);
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "El valor de campo Apellido es invalido","Error",0);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "El valor de campo Nombre es invalido","Error",0);
+                }
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "El valor de campo documento es invalido","Error",0);
+            }
         }else{
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un elemento de la tabla");
         }
         
         
-        this.clean();
+        
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     

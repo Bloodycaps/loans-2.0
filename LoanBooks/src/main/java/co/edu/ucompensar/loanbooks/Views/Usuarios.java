@@ -192,43 +192,46 @@ public class Usuarios extends javax.swing.JFrame {
                     .addGroup(escritorioLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
-                        .addComponent(listDocuments, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37))
                     .addGroup(escritorioLayout.createSequentialGroup()
-                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(escritorioLayout.createSequentialGroup()
-                                .addGap(144, 144, 144)
-                                .addComponent(jPassword))
-                            .addGroup(escritorioLayout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel6))
-                                .addGap(27, 27, 27)
-                                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBoxRoll, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBoxClientStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(escritorioLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(escritorioLayout.createSequentialGroup()
-                                .addGap(91, 91, 91)
-                                .addComponent(jLabel3))
+                                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(escritorioLayout.createSequentialGroup()
+                                        .addGap(144, 144, 144)
+                                        .addComponent(jPassword))
+                                    .addGroup(escritorioLayout.createSequentialGroup()
+                                        .addGap(11, 11, 11)
+                                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel8)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel6))
+                                        .addGap(27, 27, 27)
+                                        .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jComboBoxRoll, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jComboBoxClientStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(escritorioLayout.createSequentialGroup()
-                                .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(loadData, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(60, 67, Short.MAX_VALUE))))
+                                .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(escritorioLayout.createSequentialGroup()
+                                        .addGap(91, 91, 91)
+                                        .addComponent(jLabel3))
+                                    .addGroup(escritorioLayout.createSequentialGroup()
+                                        .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(loadData, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(60, 67, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(listDocuments, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +247,7 @@ public class Usuarios extends javax.swing.JFrame {
                     .addGroup(escritorioLayout.createSequentialGroup()
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(listDocuments, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(listDocuments, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -350,12 +353,19 @@ public class Usuarios extends javax.swing.JFrame {
         String confirmPass  = String.valueOf(this.jConfirmPassword.getPassword());
         String userRoll = this.jComboBoxRoll.getSelectedItem().toString();
         String userStatus = this.jComboBoxClientStatus.getSelectedItem().toString();
-
+                                      
         if(pass.equals(confirmPass)){
             if(pass.length() >=8){
-                User user = new User(clientDocument,pass,userRoll,userStatus);                
-
-                usersCrud.insertUsers(user);                
+                if(userRoll != "Seleccione"){
+                    if(userStatus != "Seleccione"){
+                        User user = new User(clientDocument,pass,userRoll,userStatus);                
+                        usersCrud.insertUsers(user);                                        
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "El valor de campo Estado es invalido","Error",0);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "El valor de campo Rol es invalido","Error",0);
+                }
             }else{
                 JOptionPane.showMessageDialog(null, "La contraseña debe ser mayor a 8 caracteres");
             }               
@@ -382,10 +392,17 @@ public class Usuarios extends javax.swing.JFrame {
             id = Integer.parseInt(idUser);
             if(pass.equals(confirmPass)){
                 if(pass.length() >=8){
-                    User user = new User(id,clientDocument,pass,userRoll,userStatus);                
-
-                    usersCrud.updateUsers(user); 
-                    this.clean();
+                    if(userRoll != "Seleccione"){
+                        if(userStatus != "Seleccione"){
+                            User user = new User(id,clientDocument,pass,userRoll,userStatus);                
+                            usersCrud.updateUsers(user); 
+                            this.clean();
+                        }else{
+                            JOptionPane.showMessageDialog(rootPane, "El valor de campo Estado es invalido","Error",0);
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(rootPane, "El valor de campo Rol es invalido","Error",0);
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, "La contraseña debe ser mayor a 8 caracteres");
                 }
@@ -444,6 +461,8 @@ public class Usuarios extends javax.swing.JFrame {
     public void clean(){
         this.jComboBoxRoll.setSelectedIndex(0);
         this.listDocuments.setSelectedIndex(0);
+        this.jPassword.setText("");
+        this.jConfirmPassword.setText("");
         this.jComboBoxClientStatus.setSelectedIndex(0);
         
     }
